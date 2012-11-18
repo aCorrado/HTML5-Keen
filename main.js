@@ -9,7 +9,7 @@
 
 // game resources
 var g_resources = [{
-    name: "tileset_main",
+    name: "main",
     type: "image",
     src: "data/tilesets/main.png"
 }, {
@@ -21,26 +21,21 @@ var g_resources = [{
     type: "image",
     src: "data/sprites/keen_walk_right.png"
 }, {
-	// the parallax background
-    name: "level_1_bg",
-    type: "image",
-    src: "data/area01_parallax/level_1_bg.png"
-}, {
 	// the spinning coin spritesheet
     name: "spinning_coin_gold",
     type: "image",
-    src: "data/sprite/spinning_coin_gold.png"
+    src: "data/sprites/spinning_coin_gold.png"
 }, 
 // our enemty entity
 {
     name: "wheelie_right",
     type: "image",
-    src: "data/sprite/wheelie_right.png"
+    src: "data/sprites/wheelie_right.png"
 }, {
 	// game font
     name: "32x32_font",
     type: "image",
-    src: "data/sprite/32x32_font.png"
+    src: "data/sprites/32x32_font.png"
 },
 // audio resources
 {

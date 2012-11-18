@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="116" height="17" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="background_color" value="#ddd"/>
+ </properties>
  <tileset firstgid="1" name="keen" tilewidth="16" tileheight="16">
   <image source="../tilesets/main.png" width="80" height="32"/>
  </tileset>
  <tileset firstgid="11" name="metakeen" tilewidth="16" tileheight="16">
   <image source="../tilesets/meta.png" width="80" height="16"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="solid"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Foreground" width="116" height="17">
   <data encoding="base64">
@@ -14,7 +22,7 @@
  <objectgroup name="Entities" width="116" height="17">
   <object name="mainPlayer" x="16" y="208" width="16" height="32">
    <properties>
-    <property name="image" value="gripe_run_right"/>
+    <property name="image" value="keen_walk_right"/>
     <property name="spriteheight" value="23"/>
     <property name="spritewidth" value="16"/>
    </properties>
