@@ -61,7 +61,15 @@ update: function() {
    {
       // set current vel to the maximum defined value
       // gravity will then do the rest
-      this.vel.y = -this.maxVel.y * me.timer.tick;
+      // this.gravity = 10;
+
+      // this.vel.y = -this.maxVel.y * me.timer.tick;
+      this.vel.y = -10.75 * me.timer.tick;
+
+      // this.maxVel.y = 15
+      // me.timer.tick = 1
+      // -this.maxVel.y * me.timer.tick = -15
+
       // set the jumping flag
       this.jumping = true;
       // play some audio 
