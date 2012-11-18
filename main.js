@@ -1,13 +1,13 @@
 /*!
  * 
- *   melonJS
- *   http://www.melonjs.org
- *		
- *   Step by step game creation tutorial
+ *  HTML5 Keen
+ *  https://github.com/JoeAnzalone/HTML5-Keen
+ *  By Joe Anzalone & Steven Anzalone
+ *  Uses the melonJS game engine (http://www.melonjs.org)
  *
  **/
 
-// game resources
+// Resources
 var g_resources = [{
     name: "main",
     type: "image",
@@ -25,8 +25,9 @@ var g_resources = [{
     name: "spinning_coin_gold",
     type: "image",
     src: "data/sprites/spinning_coin_gold.png"
-}, 
-// our enemty entity
+},
+
+// Enemty entity
 {
     name: "wheelie_right",
     type: "image",
@@ -60,15 +61,11 @@ var g_resources = [{
 }];
 
 
-var jsApp	= 
-{	
+var jsApp = {
 	/* ---
-	
 		Initialize the jsApp
-		
 		---			*/
-	onload: function()
-	{
+	onload: function() {
 		
 		// init the video
 		if (!me.video.init('jsapp', 240, 140, true, 'auto'))
@@ -94,39 +91,36 @@ var jsApp	=
         me.video.scale(me.video.getScreenFrameBuffer(), 3);
 	},
 	
-	
-/* ---
- 
+    /* ---------------------
     callback when everything is loaded
- 
-    --- */
-loaded: function() {
-    // set the "Play/Ingame" Screen Object
-    me.state.set(me.state.MENU, new TitleScreen());
- 
-    // set the "Play/Ingame" Screen Object
-    me.state.set(me.state.PLAY, new PlayScreen());
- 
-    // set a global fading transition for the screen
-    me.state.transition("fade", "#FFFFFF", 250);
- 
-    // add our player entity in the entity pool
-    me.entityPool.add("mainPlayer", PlayerEntity);
-    me.entityPool.add("CoinEntity", CoinEntity);
-    me.entityPool.add("EnemyEntity", EnemyEntity);
- 
-    // enable the keyboard
-    me.input.bindKey(me.input.KEY.LEFT, "left");
-    me.input.bindKey(me.input.KEY.RIGHT, "right");
-    me.input.bindKey(me.input.KEY.X, "jump", true);
- 
-    // display the menu title
-    me.state.change(me.state.MENU);
-}
+    ------------------------ */
+    loaded: function() {
+        // set the "Play/Ingame" Screen Object
+        me.state.set(me.state.MENU, new TitleScreen());
+     
+        // set the "Play/Ingame" Screen Object
+        me.state.set(me.state.PLAY, new PlayScreen());
+     
+        // set a global fading transition for the screen
+        me.state.transition("fade", "#FFFFFF", 250);
+     
+        // add our player entity in the entity pool
+        me.entityPool.add("mainPlayer", PlayerEntity);
+        me.entityPool.add("CoinEntity", CoinEntity);
+        me.entityPool.add("EnemyEntity", EnemyEntity);
+     
+        // enable the keyboard
+        me.input.bindKey(me.input.KEY.LEFT, "left");
+        me.input.bindKey(me.input.KEY.RIGHT, "right");
+        me.input.bindKey(me.input.KEY.X, "jump", true);
+     
+        // display the menu title
+        me.state.change(me.state.MENU);
+    }
 
-}; // jsApp
+}; // end jsApp
 
-/* the in game stuff*/
+/* The in game stuff */
 var PlayScreen = me.ScreenObject.extend({
  
     onResetEvent: function() {
@@ -149,11 +143,10 @@ var PlayScreen = me.ScreenObject.extend({
     },
  
     /* ---
- 
-    action to perform when game is finished (state change)
- 
+    Action to perform when game is finished (state change)
     --- */
     onDestroyEvent: function() {
+        
          // remove the HUD
     	me.game.disableHUD();
  
@@ -163,9 +156,7 @@ var PlayScreen = me.ScreenObject.extend({
  
 });
 
-
-//bootstrap :)
-window.onReady(function() 
-{
+// Bootstrap :)
+window.onReady(function() {
 	jsApp.onload();
 });

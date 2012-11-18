@@ -1,12 +1,10 @@
 /*------------------- 
-a player entity
+A player entity
 -------------------------------- */
 var PlayerEntity = me.ObjectEntity.extend({
  
     /* -----
- 
     constructor
- 
     ------ */
  
     init: function(x, y, settings) {
@@ -34,93 +32,90 @@ var PlayerEntity = me.ObjectEntity.extend({
     update the player pos
  
     ------ */
-    /* -----
-update the player pos
------- */
-update: function() {
- 
-    if (me.input.isKeyPressed('left'))
-    {
-        // flip the sprite on horizontal axis
-        this.flipX(true);
-        // update the entity velocity
-        this.vel.x -= this.accel.x * me.timer.tick;
+    update: function() {
+     
+        if (me.input.isKeyPressed('left'))
+        {
+            // flip the sprite on horizontal axis
+            this.flipX(true);
+            // update the entity velocity
+            this.vel.x -= this.accel.x * me.timer.tick;
+        }
+        else if (me.input.isKeyPressed('right'))
+        {
+            // unflip the sprite
+            this.flipX(false);
+            // update the entity velocity
+            this.vel.x += this.accel.x * me.timer.tick;
+        }
+        else
+        {
+            this.vel.x = 0;
+        }
+       if (me.input.isKeyPressed('jump')) {
+       if (!this.jumping && !this.falling) 
+       {
+          // set current vel to the maximum defined value
+          // gravity will then do the rest
+          // this.gravity = 10;
+
+          // this.vel.y = -this.maxVel.y * me.timer.tick;
+          this.vel.y = -10.75 * me.timer.tick;
+
+          // this.maxVel.y = 15
+          // me.timer.tick = 1
+          // -this.maxVel.y * me.timer.tick = -15
+
+          // set the jumping flag
+          this.jumping = true;
+          // play some audio 
+          me.audio.play("jump");
+       }
     }
-    else if (me.input.isKeyPressed('right'))
-    {
-        // unflip the sprite
-        this.flipX(false);
-        // update the entity velocity
-        this.vel.x += this.accel.x * me.timer.tick;
-    }
-    else
-    {
-        this.vel.x = 0;
-    }
-   if (me.input.isKeyPressed('jump')) {
-   if (!this.jumping && !this.falling) 
-   {
-      // set current vel to the maximum defined value
-      // gravity will then do the rest
-      // this.gravity = 10;
+     
+     
+        // check & update player movement
+        this.updateMovement();
+     
+        // check for collision
+        var res = me.game.collide(this);
+        
+        if (res) {
+            // console.log('stomp audio');
+            if (res.obj.type == me.game.ENEMY_OBJECT) {
+                if ((res.y > 0) && ! this.jumping) {
+                    // bounce (force jump)
+                    this.falling = false;
+                    this.vel.y = -this.maxVel.y * me.timer.tick;
+                    // set the jumping flag
+                    this.jumping = true;
+                    // play some audio
+                    me.audio.play("stomp");
 
-      // this.vel.y = -this.maxVel.y * me.timer.tick;
-      this.vel.y = -10.75 * me.timer.tick;
-
-      // this.maxVel.y = 15
-      // me.timer.tick = 1
-      // -this.maxVel.y * me.timer.tick = -15
-
-      // set the jumping flag
-      this.jumping = true;
-      // play some audio 
-      me.audio.play("jump");
-   }
-}
- 
- 
-    // check & update player movement
-    this.updateMovement();
- 
-    // check for collision
-    var res = me.game.collide(this);
-    
-    if (res) {
-        // console.log('stomp audio');
-        if (res.obj.type == me.game.ENEMY_OBJECT) {
-            if ((res.y > 0) && ! this.jumping) {
-                // bounce (force jump)
-                this.falling = false;
-                this.vel.y = -this.maxVel.y * me.timer.tick;
-                // set the jumping flag
-                this.jumping = true;
-                // play some audio
-                me.audio.play("stomp");
-
-            } else {
-                // let's flicker in case we touched an enemy
-                this.flicker(45);
+                } else {
+                    // let's flicker in case we touched an enemy
+                    this.flicker(45);
+                }
             }
         }
+     
+        // update animation if necessary
+        if (this.vel.x!=0 || this.vel.y!=0) {
+            // update objet animation
+            this.parent(this);
+            return true;
+        }
+        // else inform the engine we did not perform
+        // any update (e.g. position, animation)
+        return false;       
+     
     }
- 
-    // update animation if necessary
-    if (this.vel.x!=0 || this.vel.y!=0) {
-        // update objet animation
-        this.parent(this);
-        return true;
-    }
-    // else inform the engine we did not perform
-    // any update (e.g. position, animation)
-    return false;       
- 
-}
  
 });
 
 
 /*----------------
- a Coin entity
+ A Coin entity
 ------------------------ */
 var CoinEntity = me.CollectableEntity.extend({
     // extending the init function is not mandatory
@@ -132,7 +127,7 @@ var CoinEntity = me.CollectableEntity.extend({
  
     // this function is called by the engine, when
     // an object is touched by something (here collected)
- onCollision : function () {
+    onCollision : function () {
     // do something when collide
     me.audio.play("cling");
     // give some score
@@ -146,7 +141,7 @@ var CoinEntity = me.CollectableEntity.extend({
 });
 
 /* --------------------------
-an enemy Entity
+An enemy Entity
 ------------------------ */
 var EnemyEntity = me.ObjectEntity.extend({
     init: function(x, y, settings) {
@@ -219,8 +214,8 @@ var EnemyEntity = me.ObjectEntity.extend({
     }
 });
 
-/*-------------- 
-a score HUD Item
+/*--------------
+A score HUD item
 --------------------- */
  
 var ScoreObject = me.HUD_Item.extend({
@@ -231,11 +226,7 @@ var ScoreObject = me.HUD_Item.extend({
         this.font = new me.BitmapFont("32x32_font", 32);
     },
  
-    /* -----
- 
-    draw our score
- 
-    ------ */
+    // draw our score
     draw: function(context, x, y) {
         // this.font.draw(context, this.value, this.pos.x + x, this.pos.y + y);
         // console.log( this.pos.x + x + '::' + this.pos.y + y );
@@ -247,11 +238,8 @@ var ScoreObject = me.HUD_Item.extend({
 });
 
 /*----------------------
- 
     A title screen
- 
   ----------------------*/
- 
 var TitleScreen = me.ScreenObject.extend({
     // constructor
     init: function() {
