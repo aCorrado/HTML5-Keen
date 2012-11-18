@@ -9,30 +9,22 @@
 
 // game resources
 var g_resources = [{
-    name: "area01_level_tiles",
+    name: "tileset_main",
     type: "image",
-    src: "data/area01_tileset/area01_level_tiles.png"
+    src: "data/tilesets/main.png"
 }, {
-    name: "area01",
+    name: "level_1",
     type: "tmx",
-    src: "data/area01.tmx"
-}, {
-    name: "area02",
-    type: "tmx",
-    src: "data/area02.tmx"
+    src: "data/levels/level_1.tmx"
 }, {
     name: "keen_walk_right",
     type: "image",
-    src: "data/sprite/keen_walk_right.png"
+    src: "data/sprites/keen_walk_right.png"
 }, {
 	// the parallax background
-    name: "area01_bkg0",
+    name: "level_1_bg",
     type: "image",
-    src: "data/area01_parallax/area01_bkg0.png"
-}, {
-    name: "area01_bkg1",
-    type: "image",
-    src: "data/area01_parallax/area01_bkg1.png"
+    src: "data/area01_parallax/level_1_bg.png"
 }, {
 	// the spinning coin spritesheet
     name: "spinning_coin_gold",
@@ -63,11 +55,6 @@ var g_resources = [{
     channel: 1
 }, {
     name: "jump",
-    type: "audio",
-    src: "data/audio/",
-    channel: 1
-}, {
-    name: "DST-InertExponent",
     type: "audio",
     src: "data/audio/",
     channel: 1
@@ -148,11 +135,9 @@ loaded: function() {
 var PlayScreen = me.ScreenObject.extend({
  
     onResetEvent: function() {
-    	// play the audio track
-    	me.audio.playTrack("DST-InertExponent");
 
         // load a level
-        me.levelDirector.loadLevel("area01");
+        me.levelDirector.loadLevel("level_1");
  		
  		/*context.drawImage(this.title, 0, 0);
         this.font.draw(context, "LEVEL ONE", 20, 240);*/
