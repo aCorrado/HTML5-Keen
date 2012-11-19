@@ -130,15 +130,15 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
     // this function is called by the engine, when
     // an object is touched by something (here collected)
     onCollision : function () {
-    // do something when collide
-    me.audio.play("collect");
-    // give some score
-    me.game.HUD.updateItemValue("score", 250);
-    // make sure it cannot be collected "again"
-    this.collidable = false;
-    // remove it
-    me.game.remove(this);
-}
+        // do something when collide
+        me.audio.play("collect");
+        // give some score
+        me.game.HUD.updateItemValue("score", 250);
+        // make sure it cannot be collected "again"
+        this.collidable = false;
+        // remove it
+        me.game.remove(this);
+    }
  
 });
 
@@ -146,15 +146,55 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
  Lollipop entity
 ------------------------ */
 var LollipopEntity = KeenCollectableEntity.extend({
-
-    // this function is called by the engine, when
-    // an object is touched by something (here collected)
     onCollision : function () {
-    this.parent();
-    // give some score
-    me.game.HUD.updateItemValue("score", 250);
-}
+        this.parent();
+        // give some score
+        me.game.HUD.updateItemValue("score", 100);
+    }
+});
 
+/*----------------
+ Soda entity
+------------------------ */
+var SodaEntity = KeenCollectableEntity.extend({
+    onCollision : function () {
+        this.parent();
+        // give some score
+        me.game.HUD.updateItemValue("score", 200);
+    }
+});
+
+/*----------------
+ Pizza entity
+------------------------ */
+var PizzaEntity = KeenCollectableEntity.extend({
+    onCollision : function () {
+        this.parent();
+        // give some score
+        me.game.HUD.updateItemValue("score", 500);
+    }
+});
+
+/*----------------
+ Book entity
+------------------------ */
+var BookEntity = KeenCollectableEntity.extend({
+    onCollision : function () {
+        this.parent();
+        // give some score
+        me.game.HUD.updateItemValue("score", 1000);
+    }
+});
+
+/*----------------
+ Teddy Bear entity
+------------------------ */
+var TeddyBearEntity = KeenCollectableEntity.extend({
+    onCollision : function () {
+        this.parent();
+        // give some score
+        me.game.HUD.updateItemValue("score", 5000);
+    }
 });
 
 /* --------------------------

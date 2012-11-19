@@ -30,6 +30,26 @@ var g_resources = [{
     name: "lollipop",
     type: "image",
     src: "data/sprites/items/lollipop.png"
+}, {
+    // Soda
+    name: "soda",
+    type: "image",
+    src: "data/sprites/items/soda.png"
+}, {
+    // Pizza
+    name: "pizza",
+    type: "image",
+    src: "data/sprites/items/pizza.png"
+}, {
+    // Book
+    name: "book",
+    type: "image",
+    src: "data/sprites/items/book.png"
+}, {
+    // Teddy Bear
+    name: "teddy-bear",
+    type: "image",
+    src: "data/sprites/items/teddy-bear.png"
 },
 
 // Enemty entity
@@ -131,6 +151,10 @@ var jsApp = {
 
         // me.entityPool.add("KeenCollectableEntity", KeenCollectableEntity);
         me.entityPool.add("LollipopEntity", LollipopEntity);
+        me.entityPool.add("SodaEntity", SodaEntity);
+        me.entityPool.add("PizzaEntity", PizzaEntity);
+        me.entityPool.add("BookEntity", BookEntity);
+        me.entityPool.add("TeddyBearEntity", TeddyBearEntity);
 
         me.entityPool.add("EnemyEntity", EnemyEntity);
      

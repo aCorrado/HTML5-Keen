@@ -152,6 +152,30 @@
     <property name="spritewidth" value="16"/>
    </properties>
   </object>
+  <object name="PizzaEntity" x="320" y="160" width="16" height="16">
+   <properties>
+    <property name="image" value="pizza"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="BookEntity" x="336" y="160" width="16" height="16">
+   <properties>
+    <property name="image" value="book"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="TeddyBearEntity" x="352" y="160" width="16" height="16">
+   <properties>
+    <property name="image" value="teddy-bear"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="SodaEntity" x="304" y="160" width="16" height="16">
+   <properties>
+    <property name="image" value="soda"/>
+    <property name="spritewidth" value="12"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="Foreground" width="116" height="17">
   <data encoding="base64">
