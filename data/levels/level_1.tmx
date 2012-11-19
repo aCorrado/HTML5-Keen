@@ -182,7 +182,7 @@
     <property name="spritewidth" value="16"/>
    </properties>
   </object>
-  <object name="RaygunEntity" x="176" y="208" width="16" height="16">
+  <object name="RaygunEntity" x="752" y="144" width="16" height="16">
    <properties>
     <property name="image" value="raygun"/>
     <property name="spritewidth" value="16"/>
