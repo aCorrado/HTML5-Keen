@@ -25,6 +25,11 @@ var g_resources = [{
     name: "spinning_coin_gold",
     type: "image",
     src: "data/sprites/spinning_coin_gold.png"
+}, {
+    // Lollipop
+    name: "lollipop",
+    type: "image",
+    src: "data/sprites/items/lollipop.png"
 },
 
 // Enemty entity
@@ -41,6 +46,11 @@ var g_resources = [{
 // audio resources
 {
     name: "cling",
+    type: "audio",
+    src: "data/audio/",
+    channel: 2
+}, {
+    name: "lollipop",
     type: "audio",
     src: "data/audio/",
     channel: 2
@@ -106,7 +116,8 @@ var jsApp = {
      
         // add our player entity in the entity pool
         me.entityPool.add("mainPlayer", PlayerEntity);
-        me.entityPool.add("CoinEntity", CoinEntity);
+        // me.entityPool.add("CoinEntity", CoinEntity);
+        me.entityPool.add("LollipopEntity", LollipopEntity);
         me.entityPool.add("EnemyEntity", EnemyEntity);
      
         // enable the keyboard
@@ -146,7 +157,7 @@ var PlayScreen = me.ScreenObject.extend({
     Action to perform when game is finished (state change)
     --- */
     onDestroyEvent: function() {
-        
+
          // remove the HUD
     	me.game.disableHUD();
  

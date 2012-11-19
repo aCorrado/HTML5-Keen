@@ -115,9 +115,9 @@ var PlayerEntity = me.ObjectEntity.extend({
 
 
 /*----------------
- A Coin entity
+ Lollipop entity
 ------------------------ */
-var CoinEntity = me.CollectableEntity.extend({
+var LollipopEntity = me.CollectableEntity.extend({
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
     init: function(x, y, settings) {
@@ -129,7 +129,7 @@ var CoinEntity = me.CollectableEntity.extend({
     // an object is touched by something (here collected)
     onCollision : function () {
     // do something when collide
-    me.audio.play("cling");
+    me.audio.play("lollipop");
     // give some score
     me.game.HUD.updateItemValue("score", 250);
     // make sure it cannot be collected "again"

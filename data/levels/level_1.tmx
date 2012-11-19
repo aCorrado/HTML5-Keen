@@ -32,6 +32,12 @@
     <property name="spritewidth" value="16"/>
    </properties>
   </object>
+  <object name="LollipopEntity" x="192" y="208" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="Foreground" width="116" height="17">
   <data encoding="base64">
