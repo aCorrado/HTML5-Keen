@@ -51,7 +51,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 
             // var animation = me.AnimationSheet(10, 10, );
             // animation.setAnimationFrame(1);
-            me.video.getScreenCanvas().getContext('2d').webkitImageSmoothingEnabled = false;
+
         }
 
        if (me.input.isKeyPressed('jump')) {
@@ -115,11 +115,11 @@ var PlayerEntity = me.ObjectEntity.extend({
  
 });
 
-
 /*----------------
- Lollipop entity
+ KeenCollectable entity
 ------------------------ */
-var LollipopEntity = me.CollectableEntity.extend({
+var KeenCollectableEntity = me.CollectableEntity.extend({
+
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
     init: function(x, y, settings) {
@@ -131,7 +131,7 @@ var LollipopEntity = me.CollectableEntity.extend({
     // an object is touched by something (here collected)
     onCollision : function () {
     // do something when collide
-    me.audio.play("lollipop");
+    me.audio.play("collect");
     // give some score
     me.game.HUD.updateItemValue("score", 250);
     // make sure it cannot be collected "again"
@@ -140,6 +140,22 @@ var LollipopEntity = me.CollectableEntity.extend({
     me.game.remove(this);
 }
  
+});
+
+/*----------------
+ Lollipop entity
+------------------------ */
+var LollipopEntity = KeenCollectableEntity.extend({
+
+    // this function is called by the engine, when
+    // an object is touched by something (here collected)
+    onCollision : function () {
+    KeenCollectableEntity.prototype.onCollision();
+
+    // give some score
+    me.game.HUD.updateItemValue("score", 250);
+}
+
 });
 
 /* --------------------------
@@ -285,7 +301,7 @@ var TitleScreen = me.ScreenObject.extend({
         me.input.bindKey(me.input.KEY.ENTER, "enter", true);
  
         // play something
-        me.audio.play("cling");
+        // me.audio.play("cling");
  
     },
  

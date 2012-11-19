@@ -50,7 +50,7 @@ var g_resources = [{
     src: "data/audio/",
     channel: 2
 }, {
-    name: "lollipop",
+    name: "collect",
     type: "audio",
     src: "data/audio/",
     channel: 2
@@ -98,10 +98,7 @@ var jsApp = {
 
 		// me.debug.renderHitBox = true;
 
-        var ctx = me.video.getScreenCanvas().getContext('2d');
-        ctx.imageSmoothingEnabled = false;
-        ctx.webkitImageSmoothingEnabled = false;
-        ctx.mozImageSmoothingEnabled = false;
+        
 
 	},
 	
@@ -109,6 +106,12 @@ var jsApp = {
     callback when everything is loaded
     ------------------------ */
     loaded: function() {
+
+        var ctx = me.video.getScreenCanvas().getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.webkitImageSmoothingEnabled = false;
+        ctx.mozImageSmoothingEnabled = false;
+
         // set the "Play/Ingame" Screen Object
         me.state.set(me.state.MENU, new TitleScreen());
      
@@ -120,8 +123,10 @@ var jsApp = {
      
         // add our player entity in the entity pool
         me.entityPool.add("mainPlayer", PlayerEntity);
-        // me.entityPool.add("CoinEntity", CoinEntity);
+
+        // me.entityPool.add("KeenCollectableEntity", KeenCollectableEntity);
         me.entityPool.add("LollipopEntity", LollipopEntity);
+
         me.entityPool.add("EnemyEntity", EnemyEntity);
      
         // enable the keyboard
