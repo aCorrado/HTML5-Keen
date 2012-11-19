@@ -32,7 +32,121 @@
     <property name="spritewidth" value="16"/>
    </properties>
   </object>
-  <object name="LollipopEntity" x="192" y="208" width="16" height="16">
+  <object name="LollipopEntity" x="224" y="144" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="240" y="144" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="144" y="96" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="112" y="96" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="80" y="96" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="608" y="112" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="880" y="128" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1104" y="176" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1008" y="144" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1056" y="144" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1008" y="32" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1056" y="32" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1152" y="32" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1200" y="32" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1424" y="112" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1440" y="112" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1296" y="32" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1376" y="32" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1456" y="32" width="16" height="16">
+   <properties>
+    <property name="image" value="lollipop"/>
+    <property name="spritewidth" value="16"/>
+   </properties>
+  </object>
+  <object name="LollipopEntity" x="1520" y="32" width="16" height="16">
    <properties>
     <property name="image" value="lollipop"/>
     <property name="spritewidth" value="16"/>
