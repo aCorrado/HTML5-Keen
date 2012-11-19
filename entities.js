@@ -120,6 +120,8 @@ var PlayerEntity = me.ObjectEntity.extend({
 ------------------------ */
 var KeenCollectableEntity = me.CollectableEntity.extend({
 
+    sound: 'collect',
+
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
     init: function(x, y, settings) {
@@ -131,9 +133,8 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
     // an object is touched by something (here collected)
     onCollision : function () {
         // do something when collide
-        me.audio.play("collect");
-        // give some score
-        me.game.HUD.updateItemValue("score", 250);
+        me.audio.play( this.sound );
+
         // make sure it cannot be collected "again"
         this.collidable = false;
         // remove it
@@ -194,6 +195,18 @@ var TeddyBearEntity = KeenCollectableEntity.extend({
         this.parent();
         // give some score
         me.game.HUD.updateItemValue("score", 5000);
+    }
+});
+
+/*----------------
+ Raygun entity
+------------------------ */
+var RaygunEntity = KeenCollectableEntity.extend({
+
+    sound: 'raygun-collect',
+
+    onCollision : function () {
+        this.parent();
     }
 });
 

@@ -50,9 +50,14 @@ var g_resources = [{
     name: "teddy-bear",
     type: "image",
     src: "data/sprites/items/teddy-bear.png"
+}, {
+    // Raygun
+    name: "raygun",
+    type: "image",
+    src: "data/sprites/items/raygun.png"
 },
 
-// Enemty entity
+// Enemy entity
 {
     name: "wheelie_right",
     type: "image",
@@ -165,8 +170,10 @@ var jsApp = {
         me.entityPool.add("PizzaEntity", PizzaEntity);
         me.entityPool.add("BookEntity", BookEntity);
         me.entityPool.add("TeddyBearEntity", TeddyBearEntity);
+        
+        me.entityPool.add("RaygunEntity", RaygunEntity);
 
-        me.entityPool.add("EnemyEntity", EnemyEntity);
+        // me.entityPool.add("EnemyEntity", EnemyEntity);
      
         // enable the keyboard
         me.input.bindKey(me.input.KEY.LEFT, "left");
