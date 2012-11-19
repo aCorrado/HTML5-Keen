@@ -12,7 +12,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         this.parent(x, y, settings);
  
         // set the default horizontal & vertical speed (accel vector)
-        this.setVelocity(3, 15);
+        this.setVelocity(2.4, 15);
  
         // me.debug.renderHitBox = true;
 
@@ -57,19 +57,18 @@ var PlayerEntity = me.ObjectEntity.extend({
        if (me.input.isKeyPressed('jump')) {
        if (!this.jumping && !this.falling) 
        {
+
           // set current vel to the maximum defined value
           // gravity will then do the rest
-          // this.gravity = 10;
+          this.gravity = 0.15;
 
           // this.vel.y = -this.maxVel.y * me.timer.tick;
-          this.vel.y = -10.75 * me.timer.tick;
-
-          // this.maxVel.y = 15
-          // me.timer.tick = 1
-          // -this.maxVel.y * me.timer.tick = -15
+          this.vel.y = -4 * me.timer.tick;
+          // console.log(this.vel.y);
 
           // set the jumping flag
           this.jumping = true;
+
           // play some audio 
           me.audio.play("jump");
        }
