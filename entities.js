@@ -150,8 +150,7 @@ var LollipopEntity = KeenCollectableEntity.extend({
     // this function is called by the engine, when
     // an object is touched by something (here collected)
     onCollision : function () {
-    KeenCollectableEntity.prototype.onCollision();
-
+    this.parent();
     // give some score
     me.game.HUD.updateItemValue("score", 250);
 }

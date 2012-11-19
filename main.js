@@ -65,6 +65,11 @@ var g_resources = [{
     src: "data/audio/",
     channel: 1
 }, {
+    name: "land",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
     name: "title_screen",
     type: "image",
     src: "data/GUI/title_screen.png"
