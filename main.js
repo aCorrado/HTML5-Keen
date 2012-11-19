@@ -65,20 +65,10 @@ var g_resources = [{
 },
 // audio resources
 {
-    name: "cling",
-    type: "audio",
-    src: "data/audio/",
-    channel: 2
-}, {
     name: "collect",
     type: "audio",
     src: "data/audio/",
     channel: 2
-}, {
-    name: "stomp",
-    type: "audio",
-    src: "data/audio/",
-    channel: 1
 }, {
     name: "jump",
     type: "audio",
@@ -86,6 +76,16 @@ var g_resources = [{
     channel: 1
 }, {
     name: "land",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
+    name: "raygun",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
+    name: "joystick",
     type: "audio",
     src: "data/audio/",
     channel: 1
