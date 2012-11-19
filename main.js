@@ -116,17 +116,17 @@ var g_resources = [{
 }];
 
 
+
 var jsApp = {
 	/* ---
 		Initialize the jsApp
 		---			*/
 	onload: function() {
-		
+
 		// init the video
-		if (!me.video.init('jsapp', 320, 200, true, 'auto'))
-		{
+		if (!me.video.init('jsapp', 320, 200, true, 'auto')) {
 			alert("Sorry but your browser does not support html 5 canvas.");
-         return;
+            return;
 		}
 
 		// initialize the "audio"
@@ -141,9 +141,7 @@ var jsApp = {
 		// load everything & display a loading screen
 		me.state.change(me.state.LOADING);
 
-		// me.debug.renderHitBox = true;
-
-        
+		// me.debug.renderHitBox = true;        
 
 	},
 	
@@ -151,11 +149,6 @@ var jsApp = {
     callback when everything is loaded
     ------------------------ */
     loaded: function() {
-
-        var ctx = me.video.getScreenCanvas().getContext('2d');
-        ctx.imageSmoothingEnabled = false;
-        ctx.webkitImageSmoothingEnabled = false;
-        ctx.mozImageSmoothingEnabled = false;
 
         // set the "Play/Ingame" Screen Object
         me.state.set(me.state.MENU, new TitleScreen());
@@ -193,7 +186,12 @@ var jsApp = {
 
 /* The in game stuff */
 var PlayScreen = me.ScreenObject.extend({
- 
+    
+    init: function(){
+        this.parent(true);
+        console.log('init');
+    },
+
     onResetEvent: function() {
 
         // load a level
@@ -225,8 +223,12 @@ var PlayScreen = me.ScreenObject.extend({
     	me.audio.stopTrack();
     },
 
-    onUpdate: function(){
+    update: function(){
         console.log('update');
+        var ctx = me.video.getScreenCanvas().getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.webkitImageSmoothingEnabled = false;
+        ctx.mozImageSmoothingEnabled = false;
     }
  
 });
