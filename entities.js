@@ -34,24 +34,26 @@ var PlayerEntity = me.ObjectEntity.extend({
     ------ */
     update: function() {
      
-        if (me.input.isKeyPressed('left'))
-        {
+        if (me.input.isKeyPressed('left')) {
             // flip the sprite on horizontal axis
             this.flipX(true);
             // update the entity velocity
             this.vel.x -= this.accel.x * me.timer.tick;
-        }
-        else if (me.input.isKeyPressed('right'))
-        {
+        } else if (me.input.isKeyPressed('right')) {
             // unflip the sprite
             this.flipX(false);
             // update the entity velocity
             this.vel.x += this.accel.x * me.timer.tick;
-        }
-        else
-        {
+        } else {
             this.vel.x = 0;
+            // me.setAnimationFrame(1);
+            // console.log( me.AnimationSheet );
+
+            // var animation = me.AnimationSheet(10, 10, );
+            // animation.setAnimationFrame(1);
+            me.video.getScreenCanvas().getContext('2d').webkitImageSmoothingEnabled = false;
         }
+
        if (me.input.isKeyPressed('jump')) {
        if (!this.jumping && !this.falling) 
        {

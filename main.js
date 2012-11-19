@@ -83,7 +83,7 @@ var jsApp = {
 			alert("Sorry but your browser does not support html 5 canvas.");
          return;
 		}
-				
+
 		// initialize the "audio"
 		me.audio.init("mp3,ogg");
 		
@@ -98,7 +98,11 @@ var jsApp = {
 
 		// me.debug.renderHitBox = true;
 
-        me.video.scale(me.video.getScreenFrameBuffer(), 3);
+        var ctx = me.video.getScreenCanvas().getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.webkitImageSmoothingEnabled = false;
+        ctx.mozImageSmoothingEnabled = false;
+
 	},
 	
     /* ---------------------
