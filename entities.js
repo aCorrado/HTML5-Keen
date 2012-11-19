@@ -119,9 +119,9 @@ var PlayerEntity = me.ObjectEntity.extend({
  KeenCollectable entity
 ------------------------ */
 var KeenCollectableEntity = me.CollectableEntity.extend({
-
+    scoreValue: 0,
     sound: 'collect',
-
+    niceName: 'Collectable',
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
     init: function(x, y, settings) {
@@ -135,6 +135,9 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
         // do something when collide
         me.audio.play( this.sound );
 
+        // give some score
+        me.game.HUD.updateItemValue("score", this.scoreValue);
+        console.log('Collected ' + this.niceName + ' worth ' + this.scoreValue + ' points');
         // make sure it cannot be collected "again"
         this.collidable = false;
         // remove it
@@ -147,67 +150,51 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
  Lollipop entity
 ------------------------ */
 var LollipopEntity = KeenCollectableEntity.extend({
-    onCollision : function () {
-        this.parent();
-        // give some score
-        me.game.HUD.updateItemValue("score", 100);
-    }
+    niceName: 'Lollipop',
+    scoreValue: 100
 });
 
 /*----------------
  Soda entity
 ------------------------ */
 var SodaEntity = KeenCollectableEntity.extend({
-    onCollision : function () {
-        this.parent();
-        // give some score
-        me.game.HUD.updateItemValue("score", 200);
-    }
+    niceName: 'Soda',
+    scoreValue: 200
 });
 
 /*----------------
  Pizza entity
 ------------------------ */
 var PizzaEntity = KeenCollectableEntity.extend({
-    onCollision : function () {
-        this.parent();
-        // give some score
-        me.game.HUD.updateItemValue("score", 500);
-    }
+    niceName: 'Pizza',
+    scoreValue: 500
 });
 
 /*----------------
  Book entity
 ------------------------ */
 var BookEntity = KeenCollectableEntity.extend({
-    onCollision : function () {
-        this.parent();
-        // give some score
-        me.game.HUD.updateItemValue("score", 1000);
-    }
+    niceName: 'Book',
+    scoreValue: 1000
 });
 
 /*----------------
  Teddy Bear entity
 ------------------------ */
 var TeddyBearEntity = KeenCollectableEntity.extend({
-    onCollision : function () {
-        this.parent();
-        // give some score
-        me.game.HUD.updateItemValue("score", 5000);
-    }
+    niceName: 'Teddy Bear',
+    scoreValue: 5000
 });
 
 /*----------------
  Raygun entity
 ------------------------ */
 var RaygunEntity = KeenCollectableEntity.extend({
-
-    sound: 'raygun-collect',
-
-    onCollision : function () {
-        this.parent();
-    }
+    niceName: 'Raygun',
+    sound: 'raygun-collect'
+    // onCollision : function () {
+    //     this.parent();
+    // }
 });
 
 /* --------------------------

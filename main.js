@@ -218,6 +218,10 @@ var PlayScreen = me.ScreenObject.extend({
  
     	// stop the current audio track
     	me.audio.stopTrack();
+    },
+
+    onUpdate: function(){
+        console.log('update');
     }
  
 });
