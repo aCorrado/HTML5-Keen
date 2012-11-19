@@ -80,6 +80,11 @@ var g_resources = [{
     src: "data/audio/",
     channel: 1
 }, {
+    name: "fall",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
     name: "land",
     type: "audio",
     src: "data/audio/",
