@@ -80,7 +80,17 @@ var g_resources = [{
     src: "data/audio/",
     channel: 1
 }, {
-    name: "raygun",
+    name: "raygun-collect",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
+    name: "shoot",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
+    name: "shoot-wall",
     type: "audio",
     src: "data/audio/",
     channel: 1
