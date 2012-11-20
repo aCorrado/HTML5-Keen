@@ -19,7 +19,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         // me.debug.renderHitBox = true;
 
         // adjust the bounding box
-        this.updateColRect(2, 10, 3, 20);
+        this.updateColRect(2, 10, 3, 21);
         // x, w, y, h
 
         // me.game.viewport.setBounds(100, 100);
@@ -28,10 +28,17 @@ var PlayerEntity = me.ObjectEntity.extend({
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
  
 
-        this.addAnimation ('stand_right', [6]);
-        this.addAnimation ('walk_right', [0,1,2]);
-        this.addAnimation ('stand_left', [7]);
-        this.addAnimation ('walk_left', [3,4,5]);
+        this.addAnimation ('stand_right', [0]);
+        this.addAnimation ('walk_right', [1,2,3]);
+
+        this.addAnimation ('stand_left', [6]);
+        this.addAnimation ('walk_left', [7,8,9]);
+
+        this.addAnimation ('jump_right', [12,13,14,15,16,17]);
+        this.addAnimation ('jump_left', [18,19,20,21,22,23]);
+
+        this.addAnimation ('fall_right', [17]);
+        this.addAnimation ('fall_left', [23]);
 
     },
  
@@ -42,17 +49,16 @@ var PlayerEntity = me.ObjectEntity.extend({
     ------ */
 
     update: function() {
+
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
         if ( collision.y ) {
             if (collision.yprop.type != 'platform' && collision.y < 0) {
-                // console.log( 'head-bump' );
                 me.audio.play("head-bump");
             }
 
             if (collision.y > 0 && !this.falling) {
                 me.audio.play("land");
-                // console.log("land");
             }
         }
      
@@ -70,8 +76,7 @@ var PlayerEntity = me.ObjectEntity.extend({
             this.flipX(false);
 
             this.setCurrentAnimation('walk_right');
-
-            // this.image = me.loader.getImage('keen_walk_right');
+            // this.setCurrentAnimation('jump_left');
 
             // update the entity velocity
             this.vel.x += this.accel.x * me.timer.tick;
@@ -94,35 +99,50 @@ var PlayerEntity = me.ObjectEntity.extend({
 
         }
 
-       if (me.input.isKeyPressed('jump')) {
-       if (!this.jumping && !this.falling) 
-       {
+    if (me.input.isKeyPressed('jump')) {
 
-          // set current vel to the maximum defined value
-          // gravity will then do the rest
-          this.gravity = 0.15;
+        if (!this.jumping && !this.falling) {
 
-          // this.vel.y = -this.maxVel.y * me.timer.tick;
-          this.vel.y = -4 * me.timer.tick;
-          // console.log(this.vel.y);
 
-          // set the jumping flag
-          this.jumping = true;
+            // set current vel to the maximum defined value
+            // gravity will then do the rest
+            this.gravity = 0.15;
 
-          // play some audio 
-          me.audio.play("jump");
-       }
+            this.vel.y = -4 * me.timer.tick;
+
+            // set the jumping flag
+            this.jumping = true;
+
+            // play some audio
+            me.audio.play("jump");
+
+
+        }
     }
      
-     
+        
         // check & update player movement
         this.updateMovement();
      
+        if ( this.vel.y !=0 ) {
+
+            if ( this.orientation == 'left' ) {
+                this.setCurrentAnimation("fall_left");
+                // this.setAnimationFrame(0);
+            } else {
+                this.setCurrentAnimation('fall_right');
+                // this.setAnimationFrame(0);
+            }
+
+        } else  {
+            // this.setCurrentAnimation("walk");
+        }
+
+
         // check for collision
         var res = me.game.collide(this);
         
         if (res) {
-            // console.log( res );
             if (res.obj.type == me.game.ENEMY_OBJECT) {
                 this.flicker(45);
             }
