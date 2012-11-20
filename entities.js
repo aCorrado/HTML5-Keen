@@ -124,19 +124,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         if (res) {
             // console.log( res );
             if (res.obj.type == me.game.ENEMY_OBJECT) {
-                if ((res.y > 0) && ! this.jumping) {
-                    // bounce (force jump)
-                    this.falling = false;
-                    this.vel.y = -this.maxVel.y * me.timer.tick;
-                    // set the jumping flag
-                    this.jumping = true;
-                    // play some audio
-                    me.audio.play("stomp");
-
-                } else {
-                    // let's flicker in case we touched an enemy
-                    this.flicker(45);
-                }
+                this.flicker(45);
             }
         }
 
@@ -237,9 +225,9 @@ var RaygunEntity = KeenCollectableEntity.extend({
 });
 
 /* --------------------------
-An enemy Entity
+The enemy entity from the tutorial
 ------------------------ */
-var EnemyEntity = me.ObjectEntity.extend({
+var WheelieEntity = me.ObjectEntity.extend({
     init: function(x, y, settings) {
         // define this here instead of tiled
         settings.image = "wheelie_right";
@@ -308,6 +296,30 @@ var EnemyEntity = me.ObjectEntity.extend({
         }
         return false;
     }
+});
+
+
+/* --------------------------
+An enemy Entity
+------------------------ */
+var EnemyEntity = me.ObjectEntity.extend({
+   init: function(x, y, settings) {
+
+        // call the parent constructor
+        this.parent(x, y, settings);
+
+        // make it collidable
+        this.collidable = true;
+
+        // make it a enemy object
+        this.type = me.game.ENEMY_OBJECT;
+
+    }
+});
+
+
+var PatPatEntity = EnemyEntity.extend({
+
 });
 
 /*--------------

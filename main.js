@@ -106,6 +106,10 @@ var g_resources = [{
     name: "title_screen",
     type: "image",
     src: "data/GUI/title_screen.png"
+}, {
+    name: "pat-pat",
+    type: "image",
+    src: "data/sprites/enemies/pat-pat.png"
 }];
 
 
@@ -155,7 +159,7 @@ var jsApp = {
         // add our player entity in the entity pool
         me.entityPool.add("mainPlayer", PlayerEntity);
 
-        // me.entityPool.add("KeenCollectableEntity", KeenCollectableEntity);
+        // Collectable Entities
         me.entityPool.add("LollipopEntity", LollipopEntity);
         me.entityPool.add("SodaEntity", SodaEntity);
         me.entityPool.add("PizzaEntity", PizzaEntity);
@@ -164,7 +168,8 @@ var jsApp = {
         
         me.entityPool.add("RaygunEntity", RaygunEntity);
 
-        // me.entityPool.add("EnemyEntity", EnemyEntity);
+        // Enemy Entities
+        me.entityPool.add("PatPatEntity", PatPatEntity);
      
         // enable the keyboard
         me.input.bindKey(me.input.KEY.LEFT, "left");
