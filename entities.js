@@ -50,12 +50,18 @@ var PlayerEntity = me.ObjectEntity.extend({
      
         if (me.input.isKeyPressed('left')) {
             // flip the sprite on horizontal axis
-            this.flipX(true);
+            // this.flipX(true);
+
+            this.image = me.loader.getImage('keen_walk_left');
+
             // update the entity velocity
             this.vel.x -= this.accel.x * me.timer.tick;
         } else if (me.input.isKeyPressed('right')) {
             // unflip the sprite
             this.flipX(false);
+
+            this.image = me.loader.getImage('keen_walk_right');
+
             // update the entity velocity
             this.vel.x += this.accel.x * me.timer.tick;
         } else {

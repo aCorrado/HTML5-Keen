@@ -21,10 +21,9 @@ var g_resources = [{
     type: "image",
     src: "data/sprites/keen_walk_right.png"
 }, {
-	// the spinning coin spritesheet
-    name: "spinning_coin_gold",
+    name: "keen_walk_left",
     type: "image",
-    src: "data/sprites/spinning_coin_gold.png"
+    src: "data/sprites/keen_walk_left.png"
 }, {
     // Lollipop
     name: "lollipop",
@@ -55,13 +54,6 @@ var g_resources = [{
     name: "raygun",
     type: "image",
     src: "data/sprites/items/raygun.png"
-},
-
-// Enemy entity
-{
-    name: "wheelie_right",
-    type: "image",
-    src: "data/sprites/wheelie_right.png"
 }, {
 	// game font
     name: "32x32_font",
@@ -194,7 +186,6 @@ var PlayScreen = me.ScreenObject.extend({
     
     init: function(){
         this.parent(true);
-        console.log('init');
     },
 
     onResetEvent: function() {
