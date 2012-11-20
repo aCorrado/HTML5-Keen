@@ -19,7 +19,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         // me.debug.renderHitBox = true;
 
         // adjust the bounding box
-        this.updateColRect(2, 10, 3, 21);
+        this.updateColRect(2, 10, 1, 23);
         // x, w, y, h
 
         // me.game.viewport.setBounds(100, 100);
