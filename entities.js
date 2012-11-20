@@ -9,7 +9,7 @@ var PlayerEntity = me.ObjectEntity.extend({
  
     init: function(x, y, settings) {
         this.orientation = 'right';
-
+        // this.landing = false;
         // call the constructor
         this.parent(x, y, settings);
  
@@ -47,8 +47,46 @@ var PlayerEntity = me.ObjectEntity.extend({
     update the player pos
  
     ------ */
+    computeVelocity : function(vel) {
+
+        // apply gravity (if any)
+        if (this.gravity) {
+            // apply a constant gravity (if not on a ladder)
+            vel.y += !this.onladder?(this.gravity * me.timer.tick):0;
+
+            // check if falling / jumping
+            this.falling = (vel.y > 0);
+
+
+    // this.landing = (this.falling && this.jumping)?true:this.landing;
+            if ( this.falling && (this.landing || this.jumping) ) {
+                this.landing = true;
+            } else {
+                this.landing = false;
+            }
+
+            this.jumping = this.falling?false:this.jumping;
+        }
+
+        // apply friction
+        if (this.friction.x)
+            vel.x = me.utils.applyFriction(vel.x,this.friction.x);
+        if (this.friction.y)
+            vel.y = me.utils.applyFriction(vel.y,this.friction.y);
+
+        // cap velocity
+        if (vel.y !=0)
+            vel.y = vel.y.clamp(-this.maxVel.y,this.maxVel.y);
+        if (vel.x !=0)
+        vel.x = vel.x.clamp(-this.maxVel.x,this.maxVel.x);
+    },
 
     update: function() {
+
+        if ( this.falling && !this.fallingSound && !this.landing ) {
+            me.audio.play('fall');
+            this.fallingSound = true;
+        }
 
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
@@ -58,7 +96,10 @@ var PlayerEntity = me.ObjectEntity.extend({
             }
 
             if (collision.y > 0 && !this.falling) {
-                me.audio.play("land");
+                me.audio.play('land');
+                me.audio.stop('fall');
+                this.fallingSound = false;
+                this.landing = false;
             }
         }
      
@@ -89,14 +130,6 @@ var PlayerEntity = me.ObjectEntity.extend({
             } else {
                 this.setCurrentAnimation('stand_right');
             }
-            // this.setAnimationFrame(1);
-            // this.animationpause = true;
-            // me.setAnimationFrame(1);
-            // console.log( me.AnimationSheet );
-
-            // var animation = me.AnimationSheet(10, 10, );
-            // animation.setAnimationFrame(1);
-
         }
 
     if (me.input.isKeyPressed('jump')) {
@@ -187,7 +220,7 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
 
         // give some score
         me.game.HUD.updateItemValue("score", this.scoreValue);
-        // console.log('Collected ' + this.niceName + ' worth ' + this.scoreValue + ' points');
+
         // make sure it cannot be collected "again"
         this.collidable = false;
         // remove it
@@ -356,10 +389,7 @@ var ScoreObject = me.HUD_Item.extend({
  
     // draw our score
     draw: function(context, x, y) {
-        // this.font.draw(context, this.value, this.pos.x + x, this.pos.y + y);
-        // console.log( this.pos.x + x + '::' + this.pos.y + y );
         this.font.draw(context, 'LOL', this.pos.x + x, this.pos.y + y);
-        // this.font.draw(context, 'HAHA', 620, 100);
 
     }
  
