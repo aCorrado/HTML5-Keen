@@ -90,6 +90,11 @@ var g_resources = [{
     src: "data/audio/",
     channel: 1
 }, {
+    name: "head-bump",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
     name: "raygun-collect",
     type: "audio",
     src: "data/audio/",
@@ -224,7 +229,7 @@ var PlayScreen = me.ScreenObject.extend({
     },
 
     update: function(){
-        console.log('update');
+        // console.log('update');
         var ctx = me.video.getScreenCanvas().getContext('2d');
         ctx.imageSmoothingEnabled = false;
         ctx.webkitImageSmoothingEnabled = false;

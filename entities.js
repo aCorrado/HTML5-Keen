@@ -32,7 +32,21 @@ var PlayerEntity = me.ObjectEntity.extend({
     update the player pos
  
     ------ */
+
     update: function() {
+        // check for collision
+        var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
+        if ( collision.y ) {
+            if (collision.yprop.type != 'platform' && collision.y < 0) {
+                // console.log( 'head-bump' );
+                me.audio.play("head-bump");
+            }
+
+            if (collision.y > 0 && !this.falling) {
+                me.audio.play("land");
+                // console.log("land");
+            }
+        }
      
         if (me.input.isKeyPressed('left')) {
             // flip the sprite on horizontal axis
@@ -82,7 +96,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         var res = me.game.collide(this);
         
         if (res) {
-            // console.log('stomp audio');
+            // console.log( res );
             if (res.obj.type == me.game.ENEMY_OBJECT) {
                 if ((res.y > 0) && ! this.jumping) {
                     // bounce (force jump)
@@ -99,7 +113,7 @@ var PlayerEntity = me.ObjectEntity.extend({
                 }
             }
         }
-     
+
         // update animation if necessary
         if (this.vel.x!=0 || this.vel.y!=0) {
             // update objet animation
@@ -136,7 +150,7 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
 
         // give some score
         me.game.HUD.updateItemValue("score", this.scoreValue);
-        console.log('Collected ' + this.niceName + ' worth ' + this.scoreValue + ' points');
+        // console.log('Collected ' + this.niceName + ' worth ' + this.scoreValue + ' points');
         // make sure it cannot be collected "again"
         this.collidable = false;
         // remove it
