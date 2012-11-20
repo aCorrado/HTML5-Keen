@@ -9,7 +9,7 @@ var PlayerEntity = me.ObjectEntity.extend({
  
     init: function(x, y, settings) {
         this.orientation = 'right';
-        // this.landing = false;
+
         // call the constructor
         this.parent(x, y, settings);
  
@@ -57,8 +57,6 @@ var PlayerEntity = me.ObjectEntity.extend({
             // check if falling / jumping
             this.falling = (vel.y > 0);
 
-
-    // this.landing = (this.falling && this.jumping)?true:this.landing;
             if ( this.falling && (this.landing || this.jumping) ) {
                 this.landing = true;
             } else {
@@ -67,6 +65,9 @@ var PlayerEntity = me.ObjectEntity.extend({
 
             this.jumping = this.falling?false:this.jumping;
         }
+
+        // console.log( this.landing );
+        // console.log( vel.y );
 
         // apply friction
         if (this.friction.x)
@@ -82,25 +83,35 @@ var PlayerEntity = me.ObjectEntity.extend({
     },
 
     update: function() {
+        // console.log( this.landing );
 
-        if ( this.falling && !this.fallingSound && !this.landing ) {
-            me.audio.play('fall');
-            this.fallingSound = true;
-        }
+
 
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
         if ( collision.y ) {
-            if (collision.yprop.type != 'platform' && collision.y < 0) {
-                me.audio.play("head-bump");
-            }
+
 
             if (collision.y > 0 && !this.falling) {
                 me.audio.play('land');
                 me.audio.stop('fall');
                 this.fallingSound = false;
+                this.falling = false;
                 this.landing = false;
+                this.bumpedHead = false;
             }
+
+            if (collision.yprop.type != 'platform' && collision.y < 0) {
+                me.audio.play("head-bump");
+                this.falling = true;
+                this.landing = true;
+                this.bumpedHead = true;
+            }
+        }
+
+        if ( this.falling && !this.fallingSound && !this.landing && !this.bumpedHead ) {
+            me.audio.play('fall');
+            this.fallingSound = true;
         }
      
         if (me.input.isKeyPressed('left')) {
