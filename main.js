@@ -17,13 +17,9 @@ var g_resources = [{
     type: "tmx",
     src: "data/levels/level_1.tmx"
 }, {
-    name: "keen_walk_right",
+    name: "keen",
     type: "image",
-    src: "data/sprites/keen_walk_right.png"
-}, {
-    name: "keen_walk_left",
-    type: "image",
-    src: "data/sprites/keen_walk_left.png"
+    src: "data/sprites/keen.png"
 }, {
     // Lollipop
     name: "lollipop",

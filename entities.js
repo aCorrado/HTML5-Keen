@@ -8,6 +8,8 @@ var PlayerEntity = me.ObjectEntity.extend({
     ------ */
  
     init: function(x, y, settings) {
+        this.orientation = 'right';
+
         // call the constructor
         this.parent(x, y, settings);
  
@@ -25,6 +27,12 @@ var PlayerEntity = me.ObjectEntity.extend({
         // set the display to follow our position on both axis
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
  
+
+        this.addAnimation ('stand_right', [6]);
+        this.addAnimation ('walk_right', [0,1,2]);
+        this.addAnimation ('stand_left', [7]);
+        this.addAnimation ('walk_left', [3,4,5]);
+
     },
  
     /* -----
@@ -51,21 +59,33 @@ var PlayerEntity = me.ObjectEntity.extend({
         if (me.input.isKeyPressed('left')) {
             // flip the sprite on horizontal axis
             // this.flipX(true);
-
-            this.image = me.loader.getImage('keen_walk_left');
+            this.setCurrentAnimation('walk_left');
+            // this.image = me.loader.getImage('keen_walk_left');
 
             // update the entity velocity
             this.vel.x -= this.accel.x * me.timer.tick;
+            this.orientation = 'left';
         } else if (me.input.isKeyPressed('right')) {
             // unflip the sprite
             this.flipX(false);
 
-            this.image = me.loader.getImage('keen_walk_right');
+            this.setCurrentAnimation('walk_right');
+
+            // this.image = me.loader.getImage('keen_walk_right');
 
             // update the entity velocity
             this.vel.x += this.accel.x * me.timer.tick;
+            this.orientation = 'right';
         } else {
             this.vel.x = 0;
+            
+            if ( this.orientation == 'left' ) {
+                this.setCurrentAnimation('stand_left');
+            } else {
+                this.setCurrentAnimation('stand_right');
+            }
+            // this.setAnimationFrame(1);
+            // this.animationpause = true;
             // me.setAnimationFrame(1);
             // console.log( me.AnimationSheet );
 
@@ -146,6 +166,9 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
     init: function(x, y, settings) {
         // call the parent constructor
         this.parent(x, y, settings);
+
+        // settings.image = "soda";
+        // this.image = me.loader.getImage('soda');
     },
  
     // this function is called by the engine, when
@@ -211,9 +234,6 @@ var TeddyBearEntity = KeenCollectableEntity.extend({
 var RaygunEntity = KeenCollectableEntity.extend({
     niceName: 'Raygun',
     sound: 'raygun-collect'
-    // onCollision : function () {
-    //     this.parent();
-    // }
 });
 
 /* --------------------------

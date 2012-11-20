@@ -27,7 +27,7 @@
  <objectgroup name="Entities" width="116" height="17">
   <object name="mainPlayer" x="16" y="208" width="16" height="32">
    <properties>
-    <property name="image" value="keen_walk_right"/>
+    <property name="image" value="keen"/>
     <property name="spriteheight" value="23"/>
     <property name="spritewidth" value="16"/>
    </properties>
