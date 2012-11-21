@@ -10,6 +10,9 @@ var PlayerEntity = me.ObjectEntity.extend({
     init: function(x, y, settings) {
         this.orientation = 'right';
 
+        this.inventory = {};
+        this.inventory.ammo = 0;
+
         // call the constructor
         this.parent(x, y, settings);
  
@@ -26,7 +29,6 @@ var PlayerEntity = me.ObjectEntity.extend({
 
         // set the display to follow our position on both axis
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
- 
 
         this.addAnimation ('stand_right', [0]);
         this.addAnimation ('walk_right', [1,2,3]);
@@ -75,9 +77,6 @@ var PlayerEntity = me.ObjectEntity.extend({
             this.jumping = this.falling?false:this.jumping;
         }
 
-        // console.log( this.landing );
-        // console.log( vel.y );
-
         // apply friction
         if (this.friction.x)
             vel.x = me.utils.applyFriction(vel.x,this.friction.x);
@@ -92,9 +91,6 @@ var PlayerEntity = me.ObjectEntity.extend({
     },
 
     update: function() {
-        // console.log( this.landing );
-
-
 
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
@@ -152,36 +148,66 @@ var PlayerEntity = me.ObjectEntity.extend({
             }
         }
 
-    if (me.input.isKeyPressed('jump')) {
+        if (me.input.isKeyPressed('jump')) {
 
-        if (!this.jumping && !this.falling) {
-
-
-            // set current vel to the maximum defined value
-            // gravity will then do the rest
-            this.gravity = 0.15;
-
-            this.vel.y = -4 * me.timer.tick;
-
-            // set the jumping flag
-            this.jumping = true;
-
-            // play some audio
-            me.audio.play("jump");
+            if (!this.jumping && !this.falling) {
 
 
+                // set current vel to the maximum defined value
+                // gravity will then do the rest
+                this.gravity = 0.15;
+
+                this.vel.y = -4 * me.timer.tick;
+
+                // set the jumping flag
+                this.jumping = true;
+
+                // play some audio
+                me.audio.play("jump");
+
+
+            }
         }
-    }
 
-     if ( ( me.input.isKeyPressed('jump') && me.input.isKeyPressed('pogo') ) || me.input.isKeyPressed('fire') ) {
+        if ( ( me.input.isKeyPressed('jump') && me.input.isKeyPressed('pogo') ) || me.input.isKeyPressed('fire') ) {
+        // Shooting
+            this.shooting = true;
 
-        // if () {
-            this.shoot();
-        // }
+            if( this.inventory.ammo ){
+                var bullet = new BulletEntity(this.pos.x, this.pos.y + 5, { image:'bullet', spritewidth: 16, direction: this.orientation }); // don't forget that the objectEntity constructor need parameters 
+                me.game.add(bullet, this.z); // it's better to specify the z value of the emitter object, so that both objects are on the same plan 
+                me.game.sort(); // sort the object array internally
+                me.audio.play('shoot');
+                this.inventory.ammo--;
+            } else {
+                me.audio.play('shoot-empty');
+            }
 
-    }
-     
-        
+        } // END shooting
+
+
+        if (this.shooting) {
+
+
+            if ( this.vel.y == 0 && this.framesShootingFor < 15) {
+                this.vel.x = 0;
+            } else {
+                this.shooting = false;
+            }
+
+            if ( this.orientation == 'left' ) {
+                this.setCurrentAnimation("shoot_left");
+            } else {
+                this.setCurrentAnimation('shoot_right');
+            }
+
+            this.framesShootingFor += 1;
+
+        } else {
+            this.framesShootingFor = 0;
+        }
+
+
         // check & update player movement
         this.updateMovement();
      
@@ -219,34 +245,6 @@ var PlayerEntity = me.ObjectEntity.extend({
         // any update (e.g. position, animation)
         return false;       
      
-    },
-
-    shoot: function() {
-        console.log('Fire!');
-
-        // console.log( this.vel.y );
-        if ( this.vel.y == 0 ) {
-            this.vel.x = 0;
-        }
-
-        if ( this.orientation == 'left' ) {
-            this.setCurrentAnimation("shoot_left");
-            // this.setAnimationFrame(0);
-            // this.setAnimationFrame(25);
-        } else {
-            this.setCurrentAnimation('shoot_right');
-            this.animationpause = true;
-            // this.setAnimationFrame(0);
-            // this.setAnimationFrame(24);
-        }
-
-
-        // console.log();
-        bullet = new BulletEntity(this.pos.x, this.pos.y + 5, { image:'bullet', spritewidth: 16, direction: this.orientation }); // don't forget that the objectEntity constructor need parameters 
-        me.game.add(bullet, this.z); // it's better to specify the z value of the emitter object, so that both objects are on the same plan 
-        me.game.sort(); // sort the object array internally
-
-        me.audio.play('shoot');
     }
  
 });
@@ -333,7 +331,12 @@ var TeddyBearEntity = KeenCollectableEntity.extend({
 ------------------------ */
 var RaygunEntity = KeenCollectableEntity.extend({
     niceName: 'Raygun',
-    sound: 'raygun-collect'
+    sound: 'raygun-collect',
+
+    onCollision: function(res, obj){
+        this.parent(res, obj);
+        obj.inventory.ammo += 5;
+    }
 });
 
 /* --------------------------
@@ -462,6 +465,8 @@ var BulletEntity = me.ObjectEntity.extend({
         settings.image = 'bullet';
         settings.spritewidth = 16;
 
+        this.speed = 4;
+
         this.direction = settings.direction;
 
         // call the parent constructor
@@ -482,30 +487,38 @@ var BulletEntity = me.ObjectEntity.extend({
 
     update: function(){
 
-        // check for collision
-        var res = me.game.collide(this);
-        
-
-/*        if (res && res.obj.vel.x == 0) {
-
-            this.setCurrentAnimation('zap');
-            console.log('Bullet stopped!');
-            this.destroy();
-        }*/
-
-        if( this.pos.x < 0 ){
-            return;
-        }
-        if ( this.direction == 'right' ) {
-            this.vel.x = 5;
-            // this.setVelocity(5, 0);
-            // this.pos.x = this.pos.x + 5;
-        } else {
-            this.vel.x = -5;
-            // this.pos.x = this.pos.x - 5;
-        }
+        // this.flipX(this.left);
+        this.vel.x = this.direction == 'left'? -this.speed : this.speed;
         this.updateMovement();
 
+        if ( this.vel.x == 0 ){
+
+            if (!this.framesOnWall) {
+                this.framesOnWall = 0;
+
+                var randomBool = !! Math.round(Math.random() * 1);
+                if(randomBool){
+                    this.animation = 'zap';
+                } else {
+                    this.animation = 'zot';
+                }
+
+                this.setCurrentAnimation( this.animation );
+                me.audio.play('shoot-wall');
+            }
+
+            if (this.framesOnWall > 9 ) {
+                me.game.remove(this);
+            }
+            this.framesOnWall += 1;
+        }
+
+        /*var res = me.game.collide(this);
+        if ((res && res.obj.name != "mainplayer" && res.obj.isSolid) || this.vel.x == 0 || this.vel.y == 0) {
+        me.game.remove(this);
+        }*/
+
+        return true;
         
     }
 });

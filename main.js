@@ -103,6 +103,11 @@ var g_resources = [{
     src: "data/audio/",
     channel: 1
 }, {
+    name: "shoot-empty",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
     name: "joystick",
     type: "audio",
     src: "data/audio/",
@@ -173,7 +178,6 @@ var jsApp = {
 
         
         me.entityPool.add("RaygunEntity", RaygunEntity);
-        me.entityPool.add("BulletEntity", BulletEntity);
 
         // Enemy Entities
         me.entityPool.add("PatPatEntity", PatPatEntity);
