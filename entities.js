@@ -173,6 +173,12 @@ var PlayerEntity = me.ObjectEntity.extend({
             }
         }
 
+       if( me.input.isKeyPressed('c') && me.input.isKeyPressed('t') && me.input.isKeyPressed('fire') ){
+            // The C T Space cheat
+            console.log( 'Cheating!' );
+            this.inventory.ammo = 100;
+        }
+
         if ( ( me.input.isKeyPressed('jump') && me.input.isKeyPressed('pogo') ) || me.input.isKeyPressed('fire') ) {
         // Shooting
             this.shooting = true;
@@ -245,6 +251,8 @@ var PlayerEntity = me.ObjectEntity.extend({
             this.parent(this);
             return true;
         }
+
+
         // else inform the engine we did not perform
         // any update (e.g. position, animation)
         return false;       

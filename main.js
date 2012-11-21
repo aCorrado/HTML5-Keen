@@ -204,6 +204,10 @@ var jsApp = {
 
         me.input.bindKey(me.input.KEY.Z, "pogo", true);
         me.input.bindKey(me.input.KEY.SPACE, "fire", true);
+
+        me.input.bindKey(me.input.KEY.C, "c", false);
+        me.input.bindKey(me.input.KEY.T, "t", false);
+        // me.input.bindKey(me.input.KEY.SPACE, "space");
      
         // display the menu title
         me.state.change(me.state.MENU);
