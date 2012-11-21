@@ -402,12 +402,40 @@ var YorpEntity = EnemyEntity.extend({
         this.addAnimation ('look', [1,2,3,2]);
         this.addAnimation ('walk_right', [4,5]);
         this.addAnimation ('walk_left', [6,7]);
+        this.addAnimation ('die', [10]);
+        this.addAnimation ('dead', [11]);
 
         this.setCurrentAnimation('look');
     },
 
     update: function(){
         this.parent();
+
+        if( this.alive ){
+            var res = me.game.collide(this);
+            if (res && res.obj instanceof BulletEntity) {
+                this.onShot();
+            }
+        } else {
+            this.framesSinceDeath++;
+            if ( this.framesSinceDeath > 10 ) {
+                this.setCurrentAnimation('dead');
+            }
+        }
+        
+
+    },
+
+    onShot: function(){
+        this.alive = false;
+        this.setCurrentAnimation('die');
+        
+        me.audio.play('yorp-die');
+        this.framesSinceDeath = 0;
+    },
+
+    onCollision: function(res, obj){
+        // console.log(res);
     }
 });
 
