@@ -51,6 +51,11 @@ var g_resources = [{
     type: "image",
     src: "data/sprites/items/raygun.png"
 }, {
+    // Raygun bullet
+    name: "bullet",
+    type: "image",
+    src: "data/sprites/bullet.png"
+}, {
 	// game font
     name: "32x32_font",
     type: "image",
@@ -165,8 +170,10 @@ var jsApp = {
         me.entityPool.add("PizzaEntity", PizzaEntity);
         me.entityPool.add("BookEntity", BookEntity);
         me.entityPool.add("TeddyBearEntity", TeddyBearEntity);
+
         
         me.entityPool.add("RaygunEntity", RaygunEntity);
+        me.entityPool.add("BulletEntity", BulletEntity);
 
         // Enemy Entities
         me.entityPool.add("PatPatEntity", PatPatEntity);
@@ -174,7 +181,12 @@ var jsApp = {
         // enable the keyboard
         me.input.bindKey(me.input.KEY.LEFT, "left");
         me.input.bindKey(me.input.KEY.RIGHT, "right");
+
         me.input.bindKey(me.input.KEY.X, "jump", true);
+        me.input.bindKey(me.input.KEY.CTRL, "jump", true);
+
+        me.input.bindKey(me.input.KEY.Z, "pogo", true);
+        me.input.bindKey(me.input.KEY.SPACE, "fire", true);
      
         // display the menu title
         me.state.change(me.state.MENU);

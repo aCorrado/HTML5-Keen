@@ -40,6 +40,15 @@ var PlayerEntity = me.ObjectEntity.extend({
         this.addAnimation ('fall_right', [17]);
         this.addAnimation ('fall_left', [23]);
 
+        this.addAnimation ('shoot_right', [24]);
+        this.addAnimation ('shoot_left', [25]);
+
+        this.addAnimation ('pogo_down_right', [4]);
+        this.addAnimation ('pogo_up_right', [5]);
+
+        this.addAnimation ('pogo_down_left', [10]);
+        this.addAnimation ('pogo_up_left', [11]);
+
     },
  
     /* -----
@@ -163,12 +172,20 @@ var PlayerEntity = me.ObjectEntity.extend({
 
         }
     }
+
+     if ( ( me.input.isKeyPressed('jump') && me.input.isKeyPressed('pogo') ) || me.input.isKeyPressed('fire') ) {
+
+        // if () {
+            this.shoot();
+        // }
+
+    }
      
         
         // check & update player movement
         this.updateMovement();
      
-        if ( this.vel.y !=0 ) {
+        if ( this.vel.y != 0 ) {
 
             if ( this.orientation == 'left' ) {
                 this.setCurrentAnimation("fall_left");
@@ -202,6 +219,34 @@ var PlayerEntity = me.ObjectEntity.extend({
         // any update (e.g. position, animation)
         return false;       
      
+    },
+
+    shoot: function() {
+        console.log('Fire!');
+
+        // console.log( this.vel.y );
+        if ( this.vel.y == 0 ) {
+            this.vel.x = 0;
+        }
+
+        if ( this.orientation == 'left' ) {
+            this.setCurrentAnimation("shoot_left");
+            // this.setAnimationFrame(0);
+            // this.setAnimationFrame(25);
+        } else {
+            this.setCurrentAnimation('shoot_right');
+            this.animationpause = true;
+            // this.setAnimationFrame(0);
+            // this.setAnimationFrame(24);
+        }
+
+
+        // console.log();
+        bullet = new BulletEntity(this.pos.x, this.pos.y + 5, { image:'bullet', spritewidth: 16, direction: this.orientation }); // don't forget that the objectEntity constructor need parameters 
+        me.game.add(bullet, this.z); // it's better to specify the z value of the emitter object, so that both objects are on the same plan 
+        me.game.sort(); // sort the object array internally
+
+        me.audio.play('shoot');
     }
  
 });
@@ -225,7 +270,10 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
  
     // this function is called by the engine, when
     // an object is touched by something (here collected)
-    onCollision : function () {
+    onCollision : function (res, obj) {
+        if(obj.name != 'mainplayer') {
+            return;
+        }
         // do something when collide
         me.audio.play( this.sound );
 
@@ -293,6 +341,7 @@ The enemy entity from the tutorial
 ------------------------ */
 var WheelieEntity = me.ObjectEntity.extend({
     init: function(x, y, settings) {
+        // var settings = {};
         // define this here instead of tiled
         settings.image = "wheelie_right";
         settings.spritewidth = 64;
@@ -404,6 +453,61 @@ var ScoreObject = me.HUD_Item.extend({
 
     }
  
+});
+
+
+var BulletEntity = me.ObjectEntity.extend({
+
+   init: function(x, y, settings) {
+        settings.image = 'bullet';
+        settings.spritewidth = 16;
+
+        this.direction = settings.direction;
+
+        // call the parent constructor
+        this.parent(x, y, settings);
+
+        // make it collidable
+        this.collidable = true;
+
+        this.addAnimation ('flying', [0]);
+        this.setCurrentAnimation('flying');
+
+        this.addAnimation ('zap', [1]);
+        this.addAnimation ('zot', [2]);
+
+        this.gravity = 0;
+
+    },
+
+    update: function(){
+
+        // check for collision
+        var res = me.game.collide(this);
+        
+
+/*        if (res && res.obj.vel.x == 0) {
+
+            this.setCurrentAnimation('zap');
+            console.log('Bullet stopped!');
+            this.destroy();
+        }*/
+
+        if( this.pos.x < 0 ){
+            return;
+        }
+        if ( this.direction == 'right' ) {
+            this.vel.x = 5;
+            // this.setVelocity(5, 0);
+            // this.pos.x = this.pos.x + 5;
+        } else {
+            this.vel.x = -5;
+            // this.pos.x = this.pos.x - 5;
+        }
+        this.updateMovement();
+
+        
+    }
 });
 
 /*----------------------
