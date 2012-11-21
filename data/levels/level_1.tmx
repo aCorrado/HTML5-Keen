@@ -25,177 +25,41 @@
   </data>
  </layer>
  <objectgroup name="Enemy Entities" width="116" height="17">
-  <object name="PatPatEntity" x="176" y="224" width="16" height="16">
-   <properties>
-    <property name="image" value="pat-pat"/>
-    <property name="spritewidth" value="14"/>
-   </properties>
-  </object>
+  <object name="PatPatEntity" x="176" y="224" width="16" height="16"/>
+  <object name="YorpEntity" x="208" y="160" width="16" height="16"/>
+  <object name="PatPatEntity" x="1024" y="224" width="16" height="16"/>
+  <object name="PatPatEntity" x="1040" y="224" width="16" height="16"/>
+  <object name="PatPatEntity" x="1776" y="224" width="16" height="16"/>
+  <object name="PatPatEntity" x="1696" y="224" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="Entities" width="116" height="17">
-  <object name="mainPlayer" x="16" y="208" width="16" height="32">
-   <properties>
-    <property name="image" value="keen"/>
-    <property name="spriteheight" value="24"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="224" y="144" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="240" y="144" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="144" y="96" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="112" y="96" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="80" y="96" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="608" y="112" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="880" y="128" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1104" y="176" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1008" y="144" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1056" y="144" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1008" y="32" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1056" y="32" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1152" y="32" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1200" y="32" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1424" y="112" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1440" y="112" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1296" y="32" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1376" y="32" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1456" y="32" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="LollipopEntity" x="1520" y="32" width="16" height="16">
-   <properties>
-    <property name="image" value="lollipop"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="PizzaEntity" x="1232" y="64" width="16" height="16">
-   <properties>
-    <property name="image" value="pizza"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="BookEntity" x="192" y="48" width="16" height="16">
-   <properties>
-    <property name="image" value="book"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="TeddyBearEntity" x="880" y="224" width="16" height="16">
-   <properties>
-    <property name="image" value="teddy-bear"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="SodaEntity" x="1728" y="112" width="16" height="16">
-   <properties>
-    <property name="image" value="soda"/>
-    <property name="spritewidth" value="12"/>
-   </properties>
-  </object>
-  <object name="BookEntity" x="1824" y="224" width="16" height="16">
-   <properties>
-    <property name="image" value="book"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
-  <object name="RaygunEntity" x="752" y="144" width="16" height="16">
-   <properties>
-    <property name="image" value="raygun"/>
-    <property name="spritewidth" value="16"/>
-   </properties>
-  </object>
+  <object name="mainPlayer" x="16" y="208" width="16" height="32"/>
+  <object name="LollipopEntity" x="224" y="144" width="16" height="16"/>
+  <object name="LollipopEntity" x="240" y="144" width="16" height="16"/>
+  <object name="LollipopEntity" x="144" y="96" width="16" height="16"/>
+  <object name="LollipopEntity" x="112" y="96" width="16" height="16"/>
+  <object name="LollipopEntity" x="80" y="96" width="16" height="16"/>
+  <object name="LollipopEntity" x="608" y="112" width="16" height="16"/>
+  <object name="LollipopEntity" x="880" y="128" width="16" height="16"/>
+  <object name="LollipopEntity" x="1104" y="176" width="16" height="16"/>
+  <object name="LollipopEntity" x="1008" y="144" width="16" height="16"/>
+  <object name="LollipopEntity" x="1056" y="144" width="16" height="16"/>
+  <object name="LollipopEntity" x="1008" y="32" width="16" height="16"/>
+  <object name="LollipopEntity" x="1056" y="32" width="16" height="16"/>
+  <object name="LollipopEntity" x="1152" y="32" width="16" height="16"/>
+  <object name="LollipopEntity" x="1200" y="32" width="16" height="16"/>
+  <object name="LollipopEntity" x="1424" y="112" width="16" height="16"/>
+  <object name="LollipopEntity" x="1440" y="112" width="16" height="16"/>
+  <object name="LollipopEntity" x="1296" y="32" width="16" height="16"/>
+  <object name="LollipopEntity" x="1376" y="32" width="16" height="16"/>
+  <object name="LollipopEntity" x="1456" y="32" width="16" height="16"/>
+  <object name="LollipopEntity" x="1520" y="32" width="16" height="16"/>
+  <object name="PizzaEntity" x="1232" y="64" width="16" height="16"/>
+  <object name="BookEntity" x="192" y="48" width="16" height="16"/>
+  <object name="TeddyBearEntity" x="880" y="224" width="16" height="16"/>
+  <object name="SodaEntity" x="1728" y="112" width="16" height="16"/>
+  <object name="BookEntity" x="1824" y="224" width="16" height="16"/>
+  <object name="RaygunEntity" x="752" y="144" width="16" height="16"/>
  </objectgroup>
  <layer name="Foreground" width="116" height="17">
   <data encoding="base64">

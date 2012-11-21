@@ -120,6 +120,18 @@ var g_resources = [{
     name: "pat-pat",
     type: "image",
     src: "data/sprites/enemies/pat-pat.png"
+}, {
+    name: "yorp",
+    type: "image",
+    src: "data/sprites/enemies/yorp.png"
+}, {
+    name: "yorp-cry",
+    type: "audio",
+    src: "data/audio/"
+}, {
+    name: "yorp-die",
+    type: "audio",
+    src: "data/audio/"
 }];
 
 
@@ -148,7 +160,7 @@ var jsApp = {
 		// load everything & display a loading screen
 		me.state.change(me.state.LOADING);
 
-		// me.debug.renderHitBox = true;        
+		// me.debug.renderHitBox = true;
 
 	},
 	
@@ -181,6 +193,7 @@ var jsApp = {
 
         // Enemy Entities
         me.entityPool.add("PatPatEntity", PatPatEntity);
+        me.entityPool.add("YorpEntity", YorpEntity);
      
         // enable the keyboard
         me.input.bindKey(me.input.KEY.LEFT, "left");

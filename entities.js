@@ -6,12 +6,16 @@ var PlayerEntity = me.ObjectEntity.extend({
     /* -----
     constructor
     ------ */
- 
+
     init: function(x, y, settings) {
         this.orientation = 'right';
 
         this.inventory = {};
         this.inventory.ammo = 0;
+
+        settings.image = 'keen';
+        settings.spritewidth = 16;
+        settings.spriteheight = 24;
 
         // call the constructor
         this.parent(x, y, settings);
@@ -259,6 +263,10 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
     init: function(x, y, settings) {
+
+        settings.image = this.spriteimage;
+        settings.spritewidth = this.spritewidth;
+
         // call the parent constructor
         this.parent(x, y, settings);
 
@@ -291,7 +299,9 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
 ------------------------ */
 var LollipopEntity = KeenCollectableEntity.extend({
     niceName: 'Lollipop',
-    scoreValue: 100
+    scoreValue: 100,
+    spriteimage: 'lollipop',
+    spritewidth: 16,
 });
 
 /*----------------
@@ -299,7 +309,9 @@ var LollipopEntity = KeenCollectableEntity.extend({
 ------------------------ */
 var SodaEntity = KeenCollectableEntity.extend({
     niceName: 'Soda',
-    scoreValue: 200
+    scoreValue: 200,
+    spriteimage: 'soda',
+    spritewidth: 12
 });
 
 /*----------------
@@ -307,7 +319,9 @@ var SodaEntity = KeenCollectableEntity.extend({
 ------------------------ */
 var PizzaEntity = KeenCollectableEntity.extend({
     niceName: 'Pizza',
-    scoreValue: 500
+    scoreValue: 500,
+    spriteimage: 'pizza',
+    spritewidth: 16
 });
 
 /*----------------
@@ -315,7 +329,9 @@ var PizzaEntity = KeenCollectableEntity.extend({
 ------------------------ */
 var BookEntity = KeenCollectableEntity.extend({
     niceName: 'Book',
-    scoreValue: 1000
+    scoreValue: 1000,
+    spriteimage: 'book',
+    spritewidth: 16
 });
 
 /*----------------
@@ -323,7 +339,9 @@ var BookEntity = KeenCollectableEntity.extend({
 ------------------------ */
 var TeddyBearEntity = KeenCollectableEntity.extend({
     niceName: 'Teddy Bear',
-    scoreValue: 5000
+    scoreValue: 5000,
+    spriteimage: 'teddy-bear',
+    spritewidth: 16
 });
 
 /*----------------
@@ -332,6 +350,8 @@ var TeddyBearEntity = KeenCollectableEntity.extend({
 var RaygunEntity = KeenCollectableEntity.extend({
     niceName: 'Raygun',
     sound: 'raygun-collect',
+    spriteimage: 'raygun',
+    spritewidth: 16, 
 
     onCollision: function(res, obj){
         this.parent(res, obj);
@@ -340,86 +360,13 @@ var RaygunEntity = KeenCollectableEntity.extend({
 });
 
 /* --------------------------
-The enemy entity from the tutorial
------------------------- */
-var WheelieEntity = me.ObjectEntity.extend({
-    init: function(x, y, settings) {
-        // var settings = {};
-        // define this here instead of tiled
-        settings.image = "wheelie_right";
-        settings.spritewidth = 64;
- 
-        // call the parent constructor
-        this.parent(x, y, settings);
- 
-        this.startX = x;
-        this.endX = x + settings.width - settings.spritewidth;
-        // size of sprite
- 
-        // make him start from the right
-        this.pos.x = x + settings.width - settings.spritewidth;
-        this.walkLeft = true;
- 
-        // walking & jumping speed
-        this.setVelocity(4, 6);
- 
-        // make it collidable
-        this.collidable = true;
-        // make it a enemy object
-        this.type = me.game.ENEMY_OBJECT;
- 
-    },
- 
-    // call by the engine when colliding with another object
-    // obj parameter corresponds to the other object (typically the player) touching this one
-    onCollision: function(res, obj) {
- 
-        // res.y >0 means touched by something on the bottom
-        // which mean at top position for this one
-        if (this.alive && (res.y > 0) && obj.falling) {
-            this.flicker(45);
-        }
-    },
- 
-    // manage the enemy movement
-    update: function() {
-        // do nothing if not visible
-        if (!this.visible)
-            return false;
- 
-        if (this.alive) {
-            if (this.walkLeft && this.pos.x <= this.startX) {
-                this.walkLeft = false;
-            } else if (!this.walkLeft && this.pos.x >= this.endX) {
-                this.walkLeft = true;
-            }
-            // make it walk
-            this.flipX(this.walkLeft);
-            this.vel.x += (this.walkLeft) ? -this.accel.x * me.timer.tick : this.accel.x * me.timer.tick;
-                 
-        } else {
-            this.vel.x = 0;
-        }
-         
-        // check and update movement
-        this.updateMovement();
-         
-        // update animation if necessary
-        if (this.vel.x!=0 || this.vel.y!=0) {
-            // update objet animation
-            this.parent(this);
-            return true;
-        }
-        return false;
-    }
-});
-
-
-/* --------------------------
 An enemy Entity
 ------------------------ */
 var EnemyEntity = me.ObjectEntity.extend({
    init: function(x, y, settings) {
+        settings.image = this.spriteimage;
+        settings.spritewidth = this.spritewidth;
+        settings.spriteheight = this.spriteheight;
 
         // call the parent constructor
         this.parent(x, y, settings);
@@ -430,12 +377,38 @@ var EnemyEntity = me.ObjectEntity.extend({
         // make it a enemy object
         this.type = me.game.ENEMY_OBJECT;
 
+    },
+    update: function(){
+        this.parent();
+        this.updateMovement();
     }
 });
 
 
 var PatPatEntity = EnemyEntity.extend({
+    spriteimage: 'pat-pat',
+    spritewidth: 14
+});
 
+var YorpEntity = EnemyEntity.extend({
+    spritewidth: 16,
+    spriteheight: 24,
+    spriteimage: 'yorp',
+
+    init: function( x, y, settings ){
+        // call the parent constructor
+        this.parent(x, y, settings);
+
+        this.addAnimation ('look', [1,2,3,2]);
+        this.addAnimation ('walk_right', [4,5]);
+        this.addAnimation ('walk_left', [6,7]);
+
+        this.setCurrentAnimation('look');
+    },
+
+    update: function(){
+        this.parent();
+    }
 });
 
 /*--------------
