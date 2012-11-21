@@ -124,8 +124,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         }
      
         if (me.input.isKeyPressed('left')) {
-            // flip the sprite on horizontal axis
-            // this.flipX(true);
+
             this.setCurrentAnimation('walk_left');
             // this.image = me.loader.getImage('keen_walk_left');
 
@@ -133,8 +132,6 @@ var PlayerEntity = me.ObjectEntity.extend({
             this.vel.x -= this.accel.x * me.timer.tick;
             this.orientation = 'left';
         } else if (me.input.isKeyPressed('right')) {
-            // unflip the sprite
-            this.flipX(false);
 
             this.setCurrentAnimation('walk_right');
             // this.setCurrentAnimation('jump_left');
@@ -175,7 +172,6 @@ var PlayerEntity = me.ObjectEntity.extend({
 
        if( me.input.isKeyPressed('c') && me.input.isKeyPressed('t') && me.input.isKeyPressed('fire') ){
             // The C T Space cheat
-            console.log( 'Cheating!' );
             this.inventory.ammo = 100;
         }
 
@@ -241,7 +237,10 @@ var PlayerEntity = me.ObjectEntity.extend({
         
         if (res) {
             if (res.obj.type == me.game.ENEMY_OBJECT) {
-                this.flicker(45);
+                // this.flicker(45);
+                if( res.obj.deadly ){
+                    this.die();
+                }
             }
         }
 
@@ -257,6 +256,10 @@ var PlayerEntity = me.ObjectEntity.extend({
         // any update (e.g. position, animation)
         return false;       
      
+    },
+
+    die: function(){
+        console.log('Keen is dead! :\\');
     }
  
 });
@@ -371,7 +374,9 @@ var RaygunEntity = KeenCollectableEntity.extend({
 An enemy Entity
 ------------------------ */
 var EnemyEntity = me.ObjectEntity.extend({
-   init: function(x, y, settings) {
+
+    deadly: true,
+    init: function(x, y, settings) {
         settings.image = this.spriteimage;
         settings.spritewidth = this.spritewidth;
         settings.spriteheight = this.spriteheight;
@@ -399,6 +404,7 @@ var PatPatEntity = EnemyEntity.extend({
 });
 
 var YorpEntity = EnemyEntity.extend({
+    deadly: false,
     spritewidth: 16,
     spriteheight: 24,
     spriteimage: 'yorp',
@@ -408,29 +414,89 @@ var YorpEntity = EnemyEntity.extend({
         this.parent(x, y, settings);
 
         this.addAnimation ('look', [1,2,3,2]);
-        this.addAnimation ('walk_right', [4,5]);
-        this.addAnimation ('walk_left', [6,7]);
+        this.addAnimation ('walk_right', [6,7]);
+        this.addAnimation ('walk_left', [4,5]);
         this.addAnimation ('die', [10]);
         this.addAnimation ('dead', [11]);
 
         this.setCurrentAnimation('look');
+
+        this.startX = x;
+        this.endX   = x+settings.width - settings.spritewidth; // size of sprite
+        
+        
+        // make him start from the right
+        this.pos.x = x + settings.width - settings.spritewidth;
+        this.walkLeft = true;
+
+        // walking & jumping speed
+        this.setVelocity(0.2, 6);
+        
+        // make it collidable
+        this.collidable = true;
+        this.type = me.game.ENEMY_OBJECT;
     },
 
     update: function(){
         this.parent();
+        // jsApp.mainPlayer = me.game.getEntityByName("mainPlayer")[0];
 
         if( this.alive ){
+
+
+            if( !this.framesSinceHop ){
+                this.framesSinceHop = 0;
+            }
+            if( this.framesSinceHop > 40 ){
+                this.gravity = 0.05;
+                this.vel.y = -1;
+                this.framesSinceHop = 0;
+            }
+            this.framesSinceHop++;
+            
+
+
+            var mainPlayer = me.game.getEntityByName("mainPlayer")[0];
+
+            if( this.pos.x > mainPlayer.pos.x ){
+                this.walkLeft = true;
+                this.setCurrentAnimation('walk_left');
+            } else {
+                this.walkLeft = false;
+                this.setCurrentAnimation('walk_right');
+            }
+
+
             var res = me.game.collide(this);
             if (res && res.obj instanceof BulletEntity) {
                 this.onShot();
             }
+
+
+            var distanceToPlayer = this.distanceTo( me.game.getEntityByName("mainPlayer")[0]);
+            if ( distanceToPlayer > 20 ) {
+                this.vel.x += (this.walkLeft) ? -this.accel.x * me.timer.tick : this.accel.x * me.timer.tick;
+            } else {
+                this.vel.x = 0;
+            }
+
+        // END if( this.alive )
         } else {
+            this.vel.x = 0;
             this.framesSinceDeath++;
             if ( this.framesSinceDeath > 10 ) {
                 this.setCurrentAnimation('dead');
             }
         }
-        
+
+        // check & update movement
+        this.updateMovement();
+            
+        if (this.vel.x!=0 ||this.vel.y!=0) {
+            // update the object animation
+            this.parent();
+            return true;
+        }
 
     },
 
@@ -443,8 +509,17 @@ var YorpEntity = EnemyEntity.extend({
     },
 
     onCollision: function(res, obj){
-        // console.log(res);
+        if( res.y > 0 ){
+            this.onHeadBump();
+        }
+    },
+
+    onHeadBump: function(){
+        console.log('head bumped!');
+
     }
+
+
 });
 
 /*--------------
@@ -496,7 +571,6 @@ var BulletEntity = me.ObjectEntity.extend({
 
     update: function(){
 
-        // this.flipX(this.left);
         this.vel.x = this.direction == 'left'? -this.speed : this.speed;
         this.updateMovement();
 
@@ -526,7 +600,7 @@ var BulletEntity = me.ObjectEntity.extend({
         if ((res && res.obj.name != "mainplayer" && res.obj.isSolid) || this.vel.x == 0 || this.vel.y == 0) {
         me.game.remove(this);
         }*/
-
+        this.updateMovement();
         return true;
         
     }
