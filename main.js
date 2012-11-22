@@ -118,6 +118,16 @@ var g_resources = [{
     src: "data/audio/",
     channel: 1
 }, {
+    name: "die",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
+    name: "score-board",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
     name: "title_screen",
     type: "image",
     src: "data/GUI/title_screen.png"

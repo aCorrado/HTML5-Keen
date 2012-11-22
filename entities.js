@@ -55,6 +55,8 @@ var PlayerEntity = me.ObjectEntity.extend({
         this.addAnimation ('pogo_down_left', [10]);
         this.addAnimation ('pogo_up_left', [11]);
 
+        this.addAnimation ('die', [26,27]);
+
     },
  
     /* -----
@@ -95,6 +97,17 @@ var PlayerEntity = me.ObjectEntity.extend({
     },
 
     update: function() {
+
+        if ( !this.alive ) {
+            this.setCurrentAnimation('die');
+            this.vel.x = 0;
+            this.vel.y = 0;
+
+            this.parent(this);
+            this.updateMovement();
+            return true;
+        }
+
         // check for collision
         var res = me.game.collide(this);
 
@@ -362,7 +375,9 @@ var PlayerEntity = me.ObjectEntity.extend({
     },
 
     die: function(){
-        console.log('Keen is dead! :\\');
+        // console.log('Keen is dead! :\\');
+        this.alive = false;
+        me.audio.play( 'die' );
     }
  
 });
