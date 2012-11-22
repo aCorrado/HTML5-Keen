@@ -113,35 +113,34 @@ var PlayerEntity = me.ObjectEntity.extend({
         }
 
         if ( this.pogoing ) {
-
             if (me.input.isKeyPressed('left')) {
                 
-                this.setCurrentAnimation('pogo_up_left');
-
+                
                 // update the entity velocity
-                this.vel.x -= this.accel.x * me.timer.tick;
-                this.orientation = 'left';
+                this.vel.x -= 0.3;
+                this.previousvel.x = 0;
+
+                if( !this.vel.x ){
+                    this.vel.x = -1;
+                }
             } else if (me.input.isKeyPressed('right')) {
-
-                this.setCurrentAnimation('pogo_up_right');
-
                 // update the entity velocity
-                this.vel.x += this.accel.x * me.timer.tick;
-                this.orientation = 'right';
-            }
+                this.vel.x += 0.3;
+                this.previousvel.x = 0;
 
-            if ( this.orientation == 'left' ) {
-                this.setCurrentAnimation( 'pogo_up_left' );
-            } else {
-                this.setCurrentAnimation( 'pogo_up_right' );
+                if( !this.vel.x ){
+                    this.vel.x = 1;
+                }
             }
-
 
             if ( this.pogoDownFrameCount > 10 ) {
                 this.pogoDownFrameCount = 0;
                 this.gravity = 0.15;
                 this.vel.y = -4 * me.timer.tick;
-                this.vel.x = this.previousvel.x;
+
+
+                this.vel.x = this.previousvel.x * 0.9;
+
                 // set the jumping flag
                 this.jumping = true;
 
@@ -151,25 +150,45 @@ var PlayerEntity = me.ObjectEntity.extend({
 
                 if ( this.pogoDownFrameCount ) {
                     this.pogoDownFrameCount++;
-                    if ( this.orientation == 'left' ) {
-                        this.setCurrentAnimation( 'pogo_down_left' );
-                    } else {
-                        this.setCurrentAnimation('pogo_down_right');
+
+                    if ( !this.previousvel.x ) {
+                        this.previousvel.x = this.vel.x;
                     }
-                    
-                    this.previousvel.x = this.vel.x;
+
                     this.vel.x = 0;
-                    // console.log( this.previousvel.x );
                 }
 
             }
 
-            // console.log( collision );
             if( collision.y > 0 && !this.falling ){
                 // Pogo land
                 this.vel.y = 0;
                 this.pogoDownFrameCount = 1;
             }
+
+            if ( this.vel.x > 0 ) {
+                this.orientation = 'right';
+            } else if ( this.vel.x < 0 ) {
+                this.orientation = 'left';
+            }
+
+            if ( this.pogoDownFrameCount ) {
+                if ( this.orientation == 'left' ) {
+                    this.setCurrentAnimation('pogo_down_left');
+                } else {
+                    this.setCurrentAnimation('pogo_down_right');
+                }
+            } else {
+                if ( this.orientation == 'left' ) {
+                    this.setCurrentAnimation('pogo_up_left');
+                } else {
+                    this.setCurrentAnimation('pogo_up_right');
+                }
+            }
+
+
+
+
 
             this.parent(this);
             this.updateMovement();
