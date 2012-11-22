@@ -62,7 +62,7 @@ var PlayerEntity = me.ObjectEntity.extend({
     update the player pos
  
     ------ */
-    computeVelocity : function(vel) {
+    /*computeVelocity : function(vel) {
 
         // apply gravity (if any)
         if (this.gravity) {
@@ -92,14 +92,45 @@ var PlayerEntity = me.ObjectEntity.extend({
             vel.y = vel.y.clamp(-this.maxVel.y,this.maxVel.y);
         if (vel.x !=0)
         vel.x = vel.x.clamp(-this.maxVel.x,this.maxVel.x);
-    },
+    },*/
 
     update: function() {
-
+        // check for collision
+        var res = me.game.collide(this);
+        
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
-        if ( collision.y ) {
 
+        if ( me.input.isKeyPressed('pogo') ) {
+            this.pogoing = !this.pogoing;
+        }
+
+        if ( this.pogoing ) {
+
+            if ( this.orientation == 'left' ) {
+                this.setCurrentAnimation( 'pogo_up_left' );
+            } else {
+                this.setCurrentAnimation( 'pogo_up_right' );
+            }
+
+            if( collision.y > 0 ){
+                // console.log( 'Pogo land!' );
+                this.gravity = 0.15;
+                this.vel.y = -4 * me.timer.tick;
+
+                // set the jumping flag
+                this.jumping = true;
+
+                // play some audio
+                me.audio.play("jump");
+            }
+
+            this.parent(this);
+            this.updateMovement();
+            return true;
+        }
+
+        if ( collision.y ) {
 
             if (collision.y > 0 && !this.falling) {
                 me.audio.play('land');
@@ -152,7 +183,7 @@ var PlayerEntity = me.ObjectEntity.extend({
             // return true;
         }
 
-        if (me.input.isKeyPressed('jump')) {
+        if ( me.input.isKeyPressed('jump') ) {
 
             if (!this.jumping && !this.falling) {
 
@@ -223,35 +254,29 @@ var PlayerEntity = me.ObjectEntity.extend({
         if ( this.vel.y != 0 ) {
 
             if ( this.orientation == 'left' ) {
-                this.setCurrentAnimation("fall_left");
+                this.setCurrentAnimation('fall_left');
             } else {
                 this.setCurrentAnimation('fall_right');
             }
 
         } else  {
             // this.setCurrentAnimation("walk");
-        }
+        }        
 
-
-        // check for collision
-        var res = me.game.collide(this);
-        
-        if (res) {
-            if (res.obj.type == me.game.ENEMY_OBJECT) {
+        if (res && res.obj.type == me.game.ENEMY_OBJECT) {
                 // this.flicker(45);
                 if( res.obj.deadly ){
                     this.die();
                 }
-            }
         }
+    
 
         // update animation if necessary
-        if (this.vel.x!=0 || this.vel.y!=0) {
+        if (this.vel.x != 0 || this.vel.y != 0) {
             // update objet animation
             this.parent(this);
             return true;
         }
-
 
         // else inform the engine we did not perform
         // any update (e.g. position, animation)

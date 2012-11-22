@@ -25,11 +25,18 @@
   </data>
  </layer>
  <objectgroup name="Enemy Entities" width="116" height="17">
-  <object name="YorpEntity" x="304" y="112" width="144" height="16"/>
+  <object name="YorpEntity" x="304" y="112" width="16" height="16"/>
   <object name="PatPatEntity" x="1024" y="224" width="16" height="16"/>
   <object name="PatPatEntity" x="1040" y="224" width="16" height="16"/>
   <object name="PatPatEntity" x="1776" y="224" width="16" height="16"/>
   <object name="PatPatEntity" x="1696" y="224" width="16" height="16"/>
+  <object name="YorpEntity" x="624" y="80" width="16" height="16"/>
+  <object name="YorpEntity" x="960" y="80" width="16" height="16"/>
+  <object name="YorpEntity" x="1280" y="80" width="16" height="16"/>
+  <object name="YorpEntity" x="1520" y="80" width="16" height="16"/>
+  <object name="YorpEntity" x="1120" y="224" width="16" height="16"/>
+  <object name="YorpEntity" x="1696" y="128" width="16" height="16"/>
+  <object name="YorpEntity" x="1504" y="224" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="Entities" width="116" height="17">
   <object name="mainPlayer" x="16" y="208" width="16" height="32"/>
