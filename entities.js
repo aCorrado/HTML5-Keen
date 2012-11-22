@@ -240,7 +240,7 @@ var PlayerEntity = me.ObjectEntity.extend({
             
             if ( this.landing || this.jumping ) {
                 // falling no input
-                this.vel.x = this.vel.x * 0.85;
+                this.vel.x = this.vel.x * 0.75;
             } else {
                 this.vel.x = 0;
             }
@@ -670,7 +670,7 @@ var BulletEntity = me.ObjectEntity.extend({
         settings.image = 'bullet';
         settings.spritewidth = 16;
 
-        this.speed = 4;
+        this.speed = 2;
 
         this.direction = settings.direction;
 
