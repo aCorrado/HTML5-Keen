@@ -120,7 +120,8 @@ var PlayerEntity = me.ObjectEntity.extend({
                 me.game.viewport.follow(this.invisibleDeadKeen);
 
                 if (this.pos.y < 0) {
-                    me.game.remove( this );
+                    // Reload level when player is off screen
+                    KeenLevelLoader('level_1');
                 }
 
 

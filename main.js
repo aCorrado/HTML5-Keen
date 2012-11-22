@@ -231,6 +231,13 @@ var jsApp = {
 
 }; // end jsApp
 
+var KeenLevelLoader = function( level ) {
+        me.levelDirector.loadLevel( level );
+        // add a default HUD to the game mngr
+        me.game.addHUD(0, 430, 640, 60);
+        console.log('lvl loaded');
+    };
+
 /* The in game stuff */
 var PlayScreen = me.ScreenObject.extend({
     
@@ -241,16 +248,17 @@ var PlayScreen = me.ScreenObject.extend({
     onResetEvent: function() {
 
         // load a level
-        me.levelDirector.loadLevel("level_1");
+        // me.levelDirector.loadLevel('level_1');
+        KeenLevelLoader('level_1');
  		
  		/*context.drawImage(this.title, 0, 0);
         this.font.draw(context, "LEVEL ONE", 20, 240);*/
 
         // add a default HUD to the game mngr
-        me.game.addHUD(0, 430, 640, 60);
+        // me.game.addHUD(0, 430, 640, 60);
  
         // add a new HUD item
-        me.game.HUD.addItem("score", new ScoreObject(620, 10));
+        me.game.HUD.addItem('score', new ScoreObject(620, 10));
  
         // make sure everyhting is in the right order
         me.game.sort();
