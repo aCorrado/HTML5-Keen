@@ -147,6 +147,9 @@ var PlayerEntity = me.ObjectEntity.extend({
             } else {
                 this.setCurrentAnimation('stand_right');
             }
+
+            // this.updateMovement();
+            // return true;
         }
 
         if (me.input.isKeyPressed('jump')) {
@@ -221,10 +224,8 @@ var PlayerEntity = me.ObjectEntity.extend({
 
             if ( this.orientation == 'left' ) {
                 this.setCurrentAnimation("fall_left");
-                // this.setAnimationFrame(0);
             } else {
                 this.setCurrentAnimation('fall_right');
-                // this.setAnimationFrame(0);
             }
 
         } else  {
@@ -419,6 +420,9 @@ var YorpEntity = EnemyEntity.extend({
         this.addAnimation ('look', [1,2,3,2]);
         this.addAnimation ('walk_right', [6,7]);
         this.addAnimation ('walk_left', [4,5]);
+        
+        this.addAnimation ('cry', [8,9]);
+
         this.addAnimation ('die', [10]);
         this.addAnimation ('dead', [11]);
 
@@ -486,6 +490,21 @@ var YorpEntity = EnemyEntity.extend({
             }
         }
 
+        if (this.headBumpFrameCount && this.alive){
+
+            if(this.headBumpFrameCount > 300) {
+                // this.collidable = true;
+                this.setCurrentAnimation('look');
+                delete this.headBumpFrameCount;
+            } else {
+                this.setCurrentAnimation('cry');
+                this.vel.x = 0;
+                this.vel.y = 0;
+                this.headBumpFrameCount = this.headBumpFrameCount + 1;
+            }
+
+        }
+
         // check & update movement
         this.updateMovement();
             
@@ -494,6 +513,7 @@ var YorpEntity = EnemyEntity.extend({
             this.parent();
             return true;
         }
+
 
     },
 
@@ -510,14 +530,15 @@ var YorpEntity = EnemyEntity.extend({
     },
 
     onCollision: function(res, obj){
-        if( res.y > 0 ){
+        if( res.y > 0 && !this.headBumpFrameCount){
             this.onHeadBump();
         }
     },
 
     onHeadBump: function(){
-        console.log('head bumped!');
-
+        me.audio.play('yorp-cry');
+        this.headBumpFrameCount = 1;
+        // this.collidable = false;
     }
 
 
