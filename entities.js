@@ -274,6 +274,7 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
     init: function(x, y, settings) {
+        this.collidable = false;
 
         settings.image = this.spriteimage;
         settings.spritewidth = this.spritewidth;
@@ -281,8 +282,6 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
         // call the parent constructor
         this.parent(x, y, settings);
 
-        // settings.image = "soda";
-        // this.image = me.loader.getImage('soda');
     },
  
     // this function is called by the engine, when
@@ -298,7 +297,8 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
         me.game.HUD.updateItemValue("score", this.scoreValue);
 
         // make sure it cannot be collected "again"
-        this.collidable = false;
+        // this.collidable = false;
+
         // remove it
         me.game.remove(this);
     }
@@ -366,7 +366,10 @@ var RaygunEntity = KeenCollectableEntity.extend({
 
     onCollision: function(res, obj){
         this.parent(res, obj);
-        obj.inventory.ammo += 5;
+
+        if( obj.inventory ){
+            obj.inventory.ammo += 5;
+        }
     }
 });
 
@@ -466,13 +469,6 @@ var YorpEntity = EnemyEntity.extend({
                 this.setCurrentAnimation('walk_right');
             }
 
-
-            var res = me.game.collide(this);
-            if (res && res.obj instanceof BulletEntity) {
-                this.onShot();
-            }
-
-
             var distanceToPlayer = this.distanceTo( me.game.getEntityByName("mainPlayer")[0]);
             if ( distanceToPlayer > 20 ) {
                 this.vel.x += (this.walkLeft) ? -this.accel.x * me.timer.tick : this.accel.x * me.timer.tick;
@@ -486,6 +482,7 @@ var YorpEntity = EnemyEntity.extend({
             this.framesSinceDeath++;
             if ( this.framesSinceDeath > 10 ) {
                 this.setCurrentAnimation('dead');
+                this.collidable = false;
             }
         }
 
@@ -500,12 +497,16 @@ var YorpEntity = EnemyEntity.extend({
 
     },
 
-    onShot: function(){
-        this.alive = false;
-        this.setCurrentAnimation('die');
-        
-        me.audio.play('yorp-die');
-        this.framesSinceDeath = 0;
+    onShot: function( bullet ){
+        bullet.vel.x = 0;
+        if( this.alive ){
+            this.alive = false;
+            this.setCurrentAnimation('die');
+            
+            me.audio.play('yorp-die');
+            this.framesSinceDeath = 0;
+        }
+
     },
 
     onCollision: function(res, obj){
@@ -546,6 +547,7 @@ var ScoreObject = me.HUD_Item.extend({
 var BulletEntity = me.ObjectEntity.extend({
 
    init: function(x, y, settings) {
+        // this.z = 10;
         settings.image = 'bullet';
         settings.spritewidth = 16;
 
@@ -572,6 +574,18 @@ var BulletEntity = me.ObjectEntity.extend({
     update: function(){
 
         this.vel.x = this.direction == 'left'? -this.speed : this.speed;
+
+
+        var res = me.game.collide(this);
+        if ( res ) {
+            // console.log( (res.obj instanceof EnemyEntity) );
+            if( res.obj.onShot ){
+                res.obj.onShot( this );
+            }
+            
+        }
+
+        
         this.updateMovement();
 
         if ( this.vel.x == 0 ){
@@ -596,10 +610,6 @@ var BulletEntity = me.ObjectEntity.extend({
             this.framesOnWall += 1;
         }
 
-        /*var res = me.game.collide(this);
-        if ((res && res.obj.name != "mainplayer" && res.obj.isSolid) || this.vel.x == 0 || this.vel.y == 0) {
-        me.game.remove(this);
-        }*/
         this.updateMovement();
         return true;
         
