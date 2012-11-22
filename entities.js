@@ -62,7 +62,7 @@ var PlayerEntity = me.ObjectEntity.extend({
     update the player pos
  
     ------ */
-    /*computeVelocity : function(vel) {
+    computeVelocity : function(vel) {
 
         // apply gravity (if any)
         if (this.gravity) {
@@ -92,20 +92,43 @@ var PlayerEntity = me.ObjectEntity.extend({
             vel.y = vel.y.clamp(-this.maxVel.y,this.maxVel.y);
         if (vel.x !=0)
         vel.x = vel.x.clamp(-this.maxVel.x,this.maxVel.x);
-    },*/
+    },
 
     update: function() {
         // check for collision
         var res = me.game.collide(this);
-        
+
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
 
         if ( me.input.isKeyPressed('pogo') ) {
+            this.previousvel = {};
+
             this.pogoing = !this.pogoing;
+
+            if ( !this.vel.y ) {
+                this.gravity = 0.15;
+                this.vel.y = -4 * me.timer.tick;
+            }
         }
 
         if ( this.pogoing ) {
+
+            if (me.input.isKeyPressed('left')) {
+                
+                this.setCurrentAnimation('pogo_up_left');
+
+                // update the entity velocity
+                this.vel.x -= this.accel.x * me.timer.tick;
+                this.orientation = 'left';
+            } else if (me.input.isKeyPressed('right')) {
+
+                this.setCurrentAnimation('pogo_up_right');
+
+                // update the entity velocity
+                this.vel.x += this.accel.x * me.timer.tick;
+                this.orientation = 'right';
+            }
 
             if ( this.orientation == 'left' ) {
                 this.setCurrentAnimation( 'pogo_up_left' );
@@ -113,16 +136,39 @@ var PlayerEntity = me.ObjectEntity.extend({
                 this.setCurrentAnimation( 'pogo_up_right' );
             }
 
-            if( collision.y > 0 ){
-                // console.log( 'Pogo land!' );
+
+            if ( this.pogoDownFrameCount > 10 ) {
+                this.pogoDownFrameCount = 0;
                 this.gravity = 0.15;
                 this.vel.y = -4 * me.timer.tick;
-
+                this.vel.x = this.previousvel.x;
                 // set the jumping flag
                 this.jumping = true;
 
                 // play some audio
                 me.audio.play("jump");
+            } else {
+
+                if ( this.pogoDownFrameCount ) {
+                    this.pogoDownFrameCount++;
+                    if ( this.orientation == 'left' ) {
+                        this.setCurrentAnimation( 'pogo_down_left' );
+                    } else {
+                        this.setCurrentAnimation('pogo_down_right');
+                    }
+                    
+                    this.previousvel.x = this.vel.x;
+                    this.vel.x = 0;
+                    // console.log( this.previousvel.x );
+                }
+
+            }
+
+            // console.log( collision );
+            if( collision.y > 0 && !this.falling ){
+                // Pogo land
+                this.vel.y = 0;
+                this.pogoDownFrameCount = 1;
             }
 
             this.parent(this);
@@ -171,7 +217,15 @@ var PlayerEntity = me.ObjectEntity.extend({
             this.vel.x += this.accel.x * me.timer.tick;
             this.orientation = 'right';
         } else {
-            this.vel.x = 0;
+            
+            
+            if ( this.landing || this.jumping ) {
+                // falling no input
+                this.vel.x = this.vel.x * 0.95;
+            } else {
+                this.vel.x = 0;
+            }
+
             
             if ( this.orientation == 'left' ) {
                 this.setCurrentAnimation('stand_left');
@@ -525,7 +579,7 @@ var YorpEntity = EnemyEntity.extend({
                 this.setCurrentAnimation('cry');
                 this.vel.x = 0;
                 this.vel.y = 0;
-                this.headBumpFrameCount = this.headBumpFrameCount + 1;
+                this.headBumpFrameCount++;
             }
 
         }
@@ -556,14 +610,14 @@ var YorpEntity = EnemyEntity.extend({
 
     onCollision: function(res, obj){
         if( res.y > 0 && !this.headBumpFrameCount){
-            this.onHeadBump();
+            this.onHeadBump(res, obj);
         }
     },
 
-    onHeadBump: function(){
+    onHeadBump: function(res, obj){
         me.audio.play('yorp-cry');
         this.headBumpFrameCount = 1;
-        // this.collidable = false;
+        obj.pogoing = false;
     }
 
 
@@ -624,7 +678,7 @@ var BulletEntity = me.ObjectEntity.extend({
 
         var res = me.game.collide(this);
         if ( res ) {
-            // console.log( (res.obj instanceof EnemyEntity) );
+            // (res.obj instanceof EnemyEntity)
             if( res.obj.onShot ){
                 res.obj.onShot( this );
             }
