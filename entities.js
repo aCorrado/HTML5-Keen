@@ -240,7 +240,7 @@ var PlayerEntity = me.ObjectEntity.extend({
             
             if ( this.landing || this.jumping ) {
                 // falling no input
-                this.vel.x = this.vel.x * 0.95;
+                this.vel.x = this.vel.x * 0.85;
             } else {
                 this.vel.x = 0;
             }
