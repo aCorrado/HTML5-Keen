@@ -214,8 +214,8 @@ var jsApp = {
         me.input.bindKey(me.input.KEY.LEFT, "left");
         me.input.bindKey(me.input.KEY.RIGHT, "right");
 
-        me.input.bindKey(me.input.KEY.X, "jump", true);
-        me.input.bindKey(me.input.KEY.CTRL, "jump", true);
+        me.input.bindKey(me.input.KEY.X, "jump", false);
+        me.input.bindKey(me.input.KEY.CTRL, "jump", false);
 
         me.input.bindKey(me.input.KEY.Z, "pogo", true);
         me.input.bindKey(me.input.KEY.ALT, "pogo", true);

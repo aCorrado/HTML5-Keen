@@ -3,6 +3,8 @@ A player entity
 -------------------------------- */
 var PlayerEntity = me.ObjectEntity.extend({
  
+    isPlayer: true,
+
     /* -----
     constructor
     ------ */
@@ -97,22 +99,46 @@ var PlayerEntity = me.ObjectEntity.extend({
     },
 
     update: function() {
+        // check for collision
+        var res = me.game.collide(this);
+        // check for collision
+        var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
+
+        if (res && res.obj.type == me.game.ENEMY_OBJECT && res.obj.deadly && this.alive) {
+            this.die();
+        }
 
         if ( !this.alive ) {
-            this.setCurrentAnimation('die');
+
             this.vel.x = 0;
             this.vel.y = 0;
+            this.gravity = 0;
 
+            if ( this.framesSinceDeath > 90 ) {
+                // me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+
+                me.game.viewport.follow(this.invisibleDeadKeen);
+
+                if (this.pos.y < 0) {
+                    me.game.remove( this );
+                }
+
+
+
+                if( this.randomBool ){
+                    this.pos.x += 1;
+                } else {
+                    this.pos.x -= 1;                    
+                }
+                this.pos.y -= 4;
+                // console.log( this.deathpos );
+            }
+
+            this.framesSinceDeath++;
             this.parent(this);
             this.updateMovement();
             return true;
         }
-
-        // check for collision
-        var res = me.game.collide(this);
-
-        // check for collision
-        var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
 
         if ( me.input.isKeyPressed('pogo') && this.inventory.pogo ) {
             this.previousvel = {};
@@ -201,10 +227,6 @@ var PlayerEntity = me.ObjectEntity.extend({
                     this.setCurrentAnimation('pogo_up_right');
                 }
             }
-
-
-
-
 
             this.parent(this);
             this.updateMovement();
@@ -319,7 +341,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         if (this.shooting) {
 
 
-            if ( this.vel.y == 0 && this.framesShootingFor < 15) {
+            if ( this.vel.y == 0 && this.framesSinceFirstShot < 15) {
                 this.vel.x = 0;
             } else {
                 this.shooting = false;
@@ -331,10 +353,10 @@ var PlayerEntity = me.ObjectEntity.extend({
                 this.setCurrentAnimation('shoot_right');
             }
 
-            this.framesShootingFor += 1;
+            this.framesSinceFirstShot += 1;
 
         } else {
-            this.framesShootingFor = 0;
+            this.framesSinceFirstShot = 0;
         }
 
 
@@ -353,14 +375,6 @@ var PlayerEntity = me.ObjectEntity.extend({
             // this.setCurrentAnimation("walk");
         }        
 
-        if (res && res.obj.type == me.game.ENEMY_OBJECT) {
-                // this.flicker(45);
-                if( res.obj.deadly ){
-                    this.die();
-                }
-        }
-    
-
         // update animation if necessary
         if (this.vel.x != 0 || this.vel.y != 0) {
             // update objet animation
@@ -375,9 +389,18 @@ var PlayerEntity = me.ObjectEntity.extend({
     },
 
     die: function(){
-        // console.log('Keen is dead! :\\');
         this.alive = false;
         me.audio.play( 'die' );
+        this.framesSinceDeath = 1;
+        this.setCurrentAnimation('die');
+
+
+        this.invisibleDeadKeen = new me.ObjectEntity(this.pos.x, this.pos.y, {image: 'keen', spritewidth: 10, spriteheight: 10} );
+        this.invisibleDeadKeen.visible = false;
+        me.game.add(this.invisibleDeadKeen, this.z); // it's better to specify the z value of the emitter object, so that both objects are on the same plan 
+        me.game.sort(); // sort the object array internally
+
+        this.randomBool = !! Math.round(Math.random() * 1);
     }
  
 });
@@ -405,7 +428,7 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
     // this function is called by the engine, when
     // an object is touched by something (here collected)
     onCollision : function (res, obj) {
-        if(obj.name != 'mainplayer') {
+        if(!obj.isPlayer || !obj.alive) {
             return;
         }
         // do something when collide
