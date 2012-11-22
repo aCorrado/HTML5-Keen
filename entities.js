@@ -104,13 +104,15 @@ var PlayerEntity = me.ObjectEntity.extend({
         if ( me.input.isKeyPressed('pogo') && this.inventory.pogo ) {
             this.previousvel = {};
 
-            me.audio.play('jump');
-            this.pogoing = !this.pogoing;
 
-            if ( !this.vel.y ) {
+            
+
+            if ( !this.vel.y && !this.pogoing) {
                 this.gravity = 0.15;
                 this.vel.y = -4 * me.timer.tick;
+                me.audio.play('jump');
             }
+            this.pogoing = !this.pogoing;
         }
 
         if ( this.pogoing ) {
