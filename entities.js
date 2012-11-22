@@ -101,9 +101,10 @@ var PlayerEntity = me.ObjectEntity.extend({
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
 
-        if ( me.input.isKeyPressed('pogo') ) {
+        if ( me.input.isKeyPressed('pogo') && this.inventory.pogo ) {
             this.previousvel = {};
 
+            me.audio.play('jump');
             this.pogoing = !this.pogoing;
 
             if ( !this.vel.y ) {
@@ -145,7 +146,7 @@ var PlayerEntity = me.ObjectEntity.extend({
                 this.jumping = true;
 
                 // play some audio
-                me.audio.play("jump");
+                me.audio.play('jump');
             } else {
 
                 if ( this.pogoDownFrameCount ) {
@@ -280,6 +281,7 @@ var PlayerEntity = me.ObjectEntity.extend({
        if( me.input.isKeyPressed('c') && me.input.isKeyPressed('t') && me.input.isKeyPressed('fire') ){
             // The C T Space cheat
             this.inventory.ammo = 100;
+            this.inventory.pogo = true;
         }
 
         if ( ( me.input.isKeyPressed('jump') && me.input.isKeyPressed('pogo') ) || me.input.isKeyPressed('fire') ) {
@@ -468,6 +470,24 @@ var RaygunEntity = KeenCollectableEntity.extend({
 
         if( obj.inventory ){
             obj.inventory.ammo += 5;
+        }
+    }
+});
+
+/*----------------
+ Pogo entity
+------------------------ */
+var PogoEntity = KeenCollectableEntity.extend({
+    niceName: 'Pogo stick',
+    sound: 'raygun-collect',
+    spriteimage: 'pogo-stick',
+    spritewidth: 12, 
+
+    onCollision: function(res, obj){
+        this.parent(res, obj);
+
+        if( obj.inventory ){
+            obj.inventory.pogo = true;
         }
     }
 });

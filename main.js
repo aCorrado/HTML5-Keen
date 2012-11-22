@@ -51,6 +51,11 @@ var g_resources = [{
     type: "image",
     src: "data/sprites/items/raygun.png"
 }, {
+    // Pogo stick
+    name: "pogo-stick",
+    type: "image",
+    src: "data/sprites/items/pogo-stick.png"
+}, {
     // Raygun bullet
     name: "bullet",
     type: "image",
@@ -182,18 +187,18 @@ var jsApp = {
         me.entityPool.add("mainPlayer", PlayerEntity);
 
         // Collectable Entities
-        me.entityPool.add("LollipopEntity", LollipopEntity);
-        me.entityPool.add("SodaEntity", SodaEntity);
-        me.entityPool.add("PizzaEntity", PizzaEntity);
-        me.entityPool.add("BookEntity", BookEntity);
-        me.entityPool.add("TeddyBearEntity", TeddyBearEntity);
-
+        me.entityPool.add("lollipop", LollipopEntity);
+        me.entityPool.add("soda", SodaEntity);
+        me.entityPool.add("pizza", PizzaEntity);
+        me.entityPool.add("book", BookEntity);
+        me.entityPool.add("teddy-bear", TeddyBearEntity);
         
-        me.entityPool.add("RaygunEntity", RaygunEntity);
+        me.entityPool.add("raygun", RaygunEntity);
+        me.entityPool.add("pogo", PogoEntity);
 
         // Enemy Entities
-        me.entityPool.add("PatPatEntity", PatPatEntity);
-        me.entityPool.add("YorpEntity", YorpEntity);
+        me.entityPool.add("pat-pat", PatPatEntity);
+        me.entityPool.add("yorp", YorpEntity);
      
         // enable the keyboard
         me.input.bindKey(me.input.KEY.LEFT, "left");
