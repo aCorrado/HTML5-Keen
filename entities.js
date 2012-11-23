@@ -15,6 +15,8 @@ var PlayerEntity = me.ObjectEntity.extend({
         this.inventory = {};
         this.inventory.ammo = 0;
 
+        this.collidable = true;
+
         settings.image = 'keen';
         settings.spritewidth = 16;
         settings.spriteheight = 24;
@@ -104,7 +106,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
 
-        if (res && res.obj.type == me.game.ENEMY_OBJECT && res.obj.deadly && this.alive) {
+        if (res && res.obj.deadly && this.alive) {
             this.die();
         }
 
@@ -126,7 +128,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 
 
 
-                if( this.randomBool ){
+                if ( this.randomBool ) {
                     this.pos.x += 1;
                 } else {
                     this.pos.x -= 1;                    
@@ -163,7 +165,7 @@ var PlayerEntity = me.ObjectEntity.extend({
                 this.vel.x -= 0.3;
                 this.previousvel.x = 0;
 
-                if( !this.vel.x ){
+                if ( !this.vel.x ) {
                     this.vel.x = -1;
                 }
             } else if (me.input.isKeyPressed('right')) {
@@ -171,7 +173,7 @@ var PlayerEntity = me.ObjectEntity.extend({
                 this.vel.x += 0.3;
                 this.previousvel.x = 0;
 
-                if( !this.vel.x ){
+                if ( !this.vel.x ) {
                     this.vel.x = 1;
                 }
             }
@@ -203,7 +205,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 
             }
 
-            if( collision.y > 0 && !this.falling ){
+            if ( collision.y > 0 && !this.falling ) {
                 // Pogo land
                 this.vel.y = 0;
                 this.pogoDownFrameCount = 1;
@@ -316,7 +318,7 @@ var PlayerEntity = me.ObjectEntity.extend({
             }
         }
 
-       if( me.input.isKeyPressed('c') && me.input.isKeyPressed('t') && me.input.isKeyPressed('fire') ){
+       if ( me.input.isKeyPressed('c') && me.input.isKeyPressed('t') && me.input.isKeyPressed('fire') ) {
             // The C T Space cheat
             this.inventory.ammo = 100;
             this.inventory.pogo = true;
@@ -326,7 +328,7 @@ var PlayerEntity = me.ObjectEntity.extend({
         // Shooting
             this.shooting = true;
 
-            if( this.inventory.ammo ){
+            if ( this.inventory.ammo ) {
                 var bullet = new BulletEntity(this.pos.x, this.pos.y + 5, { image:'bullet', spritewidth: 16, direction: this.orientation }); // don't forget that the objectEntity constructor need parameters 
                 me.game.add(bullet, this.z); // it's better to specify the z value of the emitter object, so that both objects are on the same plan 
                 me.game.sort(); // sort the object array internally
@@ -389,7 +391,7 @@ var PlayerEntity = me.ObjectEntity.extend({
      
     },
 
-    die: function(){
+    die: function() {
         this.alive = false;
         me.audio.play( 'die' );
         this.framesSinceDeath = 1;
@@ -402,8 +404,53 @@ var PlayerEntity = me.ObjectEntity.extend({
         me.game.sort(); // sort the object array internally
 
         this.randomBool = !! Math.round(Math.random() * 1);
+    },
+    exit: function() {
+        console.log('player exiting!');
+        me.audio.play('exit');
     }
  
+});
+
+var ExitEntity = me.InvisibleEntity.extend({
+
+    init: function(x, y, settings) {
+        console.log('Init exit');
+
+        settings.image = 'keen';
+        settings.width = 10;
+        settings.height = 1;
+
+        this.parent(x, y, settings);
+
+        this.pos.y += 14;
+
+        // this.visible = false;
+        this.collidable = true;
+        
+        // adjust the bounding box
+        // x, w, y, h
+        // this.updateColRect(0, 10, 1, 1);
+
+        console.log( this );
+    },
+
+    onCollision: function(res, obj) {
+        // console.log('Exit collide');
+        
+        if ( obj && obj.exit ) {
+            obj.exit();
+        }
+
+        this.parent(res, obj);
+    },
+
+    update: function() {
+        this.parent();
+        // this.updateMovement();
+        return true;
+    }
+
 });
 
 /*----------------
@@ -429,7 +476,7 @@ var KeenCollectableEntity = me.CollectableEntity.extend({
     // this function is called by the engine, when
     // an object is touched by something (here collected)
     onCollision : function (res, obj) {
-        if(!obj.isPlayer || !obj.alive) {
+        if (!obj.isPlayer || !obj.alive) {
             return;
         }
         // do something when collide
@@ -506,10 +553,10 @@ var RaygunEntity = KeenCollectableEntity.extend({
     spriteimage: 'raygun',
     spritewidth: 16, 
 
-    onCollision: function(res, obj){
+    onCollision: function(res, obj) {
         this.parent(res, obj);
 
-        if( obj.inventory ){
+        if ( obj.inventory ) {
             obj.inventory.ammo += 5;
         }
     }
@@ -524,10 +571,10 @@ var PogoEntity = KeenCollectableEntity.extend({
     spriteimage: 'pogo-stick',
     spritewidth: 12, 
 
-    onCollision: function(res, obj){
+    onCollision: function(res, obj) {
         this.parent(res, obj);
 
-        if( obj.inventory ){
+        if ( obj.inventory ) {
             obj.inventory.pogo = true;
         }
     }
@@ -554,7 +601,7 @@ var EnemyEntity = me.ObjectEntity.extend({
         this.type = me.game.ENEMY_OBJECT;
 
     },
-    update: function(){
+    update: function() {
         this.parent();
         this.updateMovement();
     }
@@ -572,7 +619,7 @@ var YorpEntity = EnemyEntity.extend({
     spriteheight: 24,
     spriteimage: 'yorp',
 
-    init: function( x, y, settings ){
+    init: function( x, y, settings ) {
         // call the parent constructor
         this.parent(x, y, settings);
 
@@ -600,20 +647,19 @@ var YorpEntity = EnemyEntity.extend({
         
         // make it collidable
         this.collidable = true;
-        this.type = me.game.ENEMY_OBJECT;
     },
 
-    update: function(){
+    update: function() {
         this.parent();
         // jsApp.mainPlayer = me.game.getEntityByName("mainPlayer")[0];
 
-        if( this.alive ){
+        if ( this.alive ) {
 
 
-            if( !this.framesSinceHop ){
+            if ( !this.framesSinceHop ) {
                 this.framesSinceHop = 0;
             }
-            if( this.framesSinceHop > 40 ){
+            if ( this.framesSinceHop > 40 ) {
                 this.gravity = 0.05;
                 this.vel.y = -1;
                 this.framesSinceHop = 0;
@@ -624,7 +670,7 @@ var YorpEntity = EnemyEntity.extend({
 
             var mainPlayer = me.game.getEntityByName("mainPlayer")[0];
 
-            if( this.pos.x > mainPlayer.pos.x ){
+            if ( this.pos.x > mainPlayer.pos.x ) {
                 this.walkLeft = true;
                 this.setCurrentAnimation('walk_left');
             } else {
@@ -639,7 +685,7 @@ var YorpEntity = EnemyEntity.extend({
                 this.vel.x = 0;
             }
 
-        // END if( this.alive )
+        // END if ( this.alive )
         } else {
             this.vel.x = 0;
             this.framesSinceDeath++;
@@ -649,9 +695,9 @@ var YorpEntity = EnemyEntity.extend({
             }
         }
 
-        if (this.headBumpFrameCount && this.alive){
+        if (this.headBumpFrameCount && this.alive) {
 
-            if(this.headBumpFrameCount > 300) {
+            if (this.headBumpFrameCount > 300) {
                 // this.collidable = true;
                 this.setCurrentAnimation('look');
                 delete this.headBumpFrameCount;
@@ -676,9 +722,9 @@ var YorpEntity = EnemyEntity.extend({
 
     },
 
-    onShot: function( bullet ){
+    onShot: function( bullet ) {
         bullet.vel.x = 0;
-        if( this.alive ){
+        if ( this.alive ) {
             this.alive = false;
             this.setCurrentAnimation('die');
             
@@ -688,13 +734,13 @@ var YorpEntity = EnemyEntity.extend({
 
     },
 
-    onCollision: function(res, obj){
-        if( res.y > 0 && !this.headBumpFrameCount){
+    onCollision: function(res, obj) {
+        if ( res.y > 0 && !this.headBumpFrameCount) {
             this.onHeadBump(res, obj);
         }
     },
 
-    onHeadBump: function(res, obj){
+    onHeadBump: function(res, obj) {
         me.audio.play('yorp-cry');
         this.headBumpFrameCount = 1;
         obj.pogoing = false;
@@ -751,7 +797,7 @@ var BulletEntity = me.ObjectEntity.extend({
 
     },
 
-    update: function(){
+    update: function() {
 
         this.vel.x = this.direction == 'left'? -this.speed : this.speed;
 
@@ -759,22 +805,21 @@ var BulletEntity = me.ObjectEntity.extend({
         var res = me.game.collide(this);
         if ( res ) {
             // (res.obj instanceof EnemyEntity)
-            if( res.obj.onShot ){
+            if ( res.obj.onShot ) {
                 res.obj.onShot( this );
             }
-            
         }
 
         
         this.updateMovement();
 
-        if ( this.vel.x == 0 ){
+        if ( this.vel.x == 0 ) {
 
             if (!this.framesOnWall) {
                 this.framesOnWall = 0;
 
                 var randomBool = !! Math.round(Math.random() * 1);
-                if(randomBool){
+                if (randomBool) {
                     this.animation = 'zap';
                 } else {
                     this.animation = 'zot';

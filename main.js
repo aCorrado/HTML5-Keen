@@ -118,6 +118,11 @@ var g_resources = [{
     src: "data/audio/",
     channel: 1
 }, {
+    name: "exit",
+    type: "audio",
+    src: "data/audio/",
+    channel: 1
+}, {
     name: "die",
     type: "audio",
     src: "data/audio/",
@@ -209,6 +214,8 @@ var jsApp = {
         // Enemy Entities
         me.entityPool.add("pat-pat", PatPatEntity);
         me.entityPool.add("yorp", YorpEntity);
+
+        me.entityPool.add("exit", ExitEntity);
      
         // enable the keyboard
         me.input.bindKey(me.input.KEY.LEFT, "left");

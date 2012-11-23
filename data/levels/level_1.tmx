@@ -65,6 +65,7 @@
   <object name="soda" x="1728" y="112" width="16" height="16"/>
   <object name="book" x="1824" y="224" width="16" height="16"/>
   <object name="raygun" x="752" y="144" width="16" height="16"/>
+  <object name="exit" x="176" y="224" width="16" height="16"/>
  </objectgroup>
  <layer name="Foreground" width="116" height="17">
   <data encoding="base64">
