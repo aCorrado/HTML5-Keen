@@ -629,8 +629,22 @@ var EnemyEntity = me.ObjectEntity.extend({
 
 var PatPatEntity = EnemyEntity.extend({
     spriteimage: 'pat-pat',
-    spritewidth: 14
+    spritewidth: 14,
 });
+
+var GreenSpikesEntity = EnemyEntity.extend({
+    spriteimage: 'green-spikes',
+    spritewidth: 32,
+    spriteheight: 16,
+    init: function( x, y, settings ){
+        this.parent( x, y, settings );
+        this.addAnimation('wave', [0,1,2,3]);
+        this.setCurrentAnimation('wave');
+        this.gravity = 0;
+    }
+});
+
+
 
 var YorpEntity = EnemyEntity.extend({
     deadly: false,

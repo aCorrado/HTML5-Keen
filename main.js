@@ -146,6 +146,10 @@ var g_resources = [{
     type: "image",
     src: "data/sprites/enemies/pat-pat.png"
 }, {
+    name: "green-spikes",
+    type: "image",
+    src: "data/sprites/environment/green-spikes.png"
+}, {
     name: "yorp",
     type: "image",
     src: "data/sprites/enemies/yorp.png"
@@ -218,6 +222,7 @@ var jsApp = {
 
         // Enemy Entities
         me.entityPool.add("pat-pat", PatPatEntity);
+        me.entityPool.add("green-spikes", GreenSpikesEntity);
         me.entityPool.add("yorp", YorpEntity);
 
         me.entityPool.add("exit", ExitEntity);
