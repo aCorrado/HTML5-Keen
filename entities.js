@@ -110,6 +110,31 @@ var PlayerEntity = me.ObjectEntity.extend({
             this.die();
         }
 
+        if ( this.exiting ) {
+            this.vel.x = 0.7;
+            this.setCurrentAnimation('walk_right');
+
+            if ( this.framesSinceExitCollision > 50 ) {
+                this.visible = false;
+                me.game.remove( this.exitOverlay );
+
+                if ( this.framesSinceExitCollision > 100 ) {
+                    this.exiting = false;
+                    KeenLevelLoader('level_1');
+                    return true;
+                    // me.game.viewport.fadeOut('#FF0000', 250, function(){ });
+                }
+
+            }
+
+            this.framesSinceExitCollision++;
+
+            this.parent( this );
+            this.updateMovement();
+
+            return true;
+        }
+
         if ( !this.alive ) {
 
             this.vel.x = 0;
@@ -134,7 +159,6 @@ var PlayerEntity = me.ObjectEntity.extend({
                     this.pos.x -= 1;                    
                 }
                 this.pos.y -= 4;
-                // console.log( this.deathpos );
             }
 
             this.framesSinceDeath++;
@@ -263,15 +287,13 @@ var PlayerEntity = me.ObjectEntity.extend({
         if (me.input.isKeyPressed('left')) {
 
             this.setCurrentAnimation('walk_left');
-            // this.image = me.loader.getImage('keen_walk_left');
 
             // update the entity velocity
             this.vel.x -= this.accel.x * me.timer.tick;
             this.orientation = 'left';
-        } else if (me.input.isKeyPressed('right')) {
+        } else if ( me.input.isKeyPressed('right') ) {
 
             this.setCurrentAnimation('walk_right');
-            // this.setCurrentAnimation('jump_left');
 
             // update the entity velocity
             this.vel.x += this.accel.x * me.timer.tick;
@@ -375,7 +397,7 @@ var PlayerEntity = me.ObjectEntity.extend({
             }
 
         } else  {
-            // this.setCurrentAnimation("walk");
+
         }        
 
         // update animation if necessary
@@ -405,9 +427,15 @@ var PlayerEntity = me.ObjectEntity.extend({
 
         this.randomBool = !! Math.round(Math.random() * 1);
     },
-    exit: function() {
-        console.log('player exiting!');
+
+    exit: function( exit ) {
         me.audio.play('exit');
+        this.exiting = true;
+        this.framesSinceExitCollision = 0;
+
+        this.exitOverlay = new me.SpriteObject( exit.pos.x + 32, exit.pos.y - 36, me.loader.getImage('exit-overlay'), 33, 38 );
+        me.game.add( this.exitOverlay, this.z + 1); // it's better to specify the z value of the emitter object, so that both objects are on the same plan 
+        me.game.sort(); // sort the object array internally
     }
  
 });
@@ -415,31 +443,23 @@ var PlayerEntity = me.ObjectEntity.extend({
 var ExitEntity = me.InvisibleEntity.extend({
 
     init: function(x, y, settings) {
-        console.log('Init exit');
 
         settings.image = 'keen';
-        settings.width = 10;
+        settings.width = 16;
         settings.height = 1;
 
         this.parent(x, y, settings);
 
-        this.pos.y += 14;
+        this.pos.y += 30;
 
-        // this.visible = false;
         this.collidable = true;
-        
-        // adjust the bounding box
-        // x, w, y, h
-        // this.updateColRect(0, 10, 1, 1);
 
-        console.log( this );
     },
 
     onCollision: function(res, obj) {
-        // console.log('Exit collide');
         
-        if ( obj && obj.exit ) {
-            obj.exit();
+        if ( obj && obj.exit && !obj.exiting ) {
+            obj.exit( this );
         }
 
         this.parent(res, obj);
@@ -447,7 +467,6 @@ var ExitEntity = me.InvisibleEntity.extend({
 
     update: function() {
         this.parent();
-        // this.updateMovement();
         return true;
     }
 
@@ -655,7 +674,6 @@ var YorpEntity = EnemyEntity.extend({
 
         if ( this.alive ) {
 
-
             if ( !this.framesSinceHop ) {
                 this.framesSinceHop = 0;
             }
@@ -769,11 +787,9 @@ var ScoreObject = me.HUD_Item.extend({
  
 });
 
-
 var BulletEntity = me.ObjectEntity.extend({
 
    init: function(x, y, settings) {
-        // this.z = 10;
         settings.image = 'bullet';
         settings.spritewidth = 16;
 
