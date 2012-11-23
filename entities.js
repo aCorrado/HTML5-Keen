@@ -776,9 +776,11 @@ var YorpEntity = EnemyEntity.extend({
     },
 
     onHeadBump: function(res, obj) {
-        me.audio.play('yorp-cry');
-        this.headBumpFrameCount = 1;
-        obj.pogoing = false;
+        if ( obj.alive ) {
+            me.audio.play('yorp-cry');
+            this.headBumpFrameCount = 1;
+            obj.pogoing = false;
+        }
     }
 
 
