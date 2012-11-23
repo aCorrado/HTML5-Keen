@@ -123,6 +123,11 @@ var g_resources = [{
     src: "data/audio/",
     channel: 1
 }, {
+    name: "exit-overlay",
+    type: "image",
+    src: "data/sprites/exit-overlay.png",
+    channel: 1
+}, {
     name: "die",
     type: "audio",
     src: "data/audio/",
@@ -196,7 +201,7 @@ var jsApp = {
         me.state.set(me.state.PLAY, new PlayScreen());
      
         // set a global fading transition for the screen
-        me.state.transition("fade", "#FFFFFF", 250);
+        me.state.transition('fade', '#FFFFFF', 250);
      
         // add our player entity in the entity pool
         me.entityPool.add("mainPlayer", PlayerEntity);
@@ -242,7 +247,6 @@ var KeenLevelLoader = function( level ) {
         me.levelDirector.loadLevel( level );
         // add a default HUD to the game mngr
         me.game.addHUD(0, 430, 640, 60);
-        console.log('lvl loaded');
     };
 
 /* The in game stuff */
@@ -285,7 +289,6 @@ var PlayScreen = me.ScreenObject.extend({
     },
 
     update: function(){
-        // console.log('update');
         var ctx = me.video.getScreenCanvas().getContext('2d');
         ctx.imageSmoothingEnabled = false;
         ctx.webkitImageSmoothingEnabled = false;
