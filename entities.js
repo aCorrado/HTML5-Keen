@@ -429,6 +429,9 @@ var PlayerEntity = me.ObjectEntity.extend({
     },
 
     exit: function( exit ) {
+        if ( this.pogoing ) {
+            return true;
+        }
         me.audio.play('exit');
         this.exiting = true;
         this.framesSinceExitCollision = 0;
