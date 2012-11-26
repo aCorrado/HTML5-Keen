@@ -25,6 +25,14 @@ var g_resources = [{
     type: "tmx",
     src: "data/levels/level_2.tmx"
 }, {
+    name: "3",
+    type: "image",
+    src: "data/tilesets/levels/3.png"
+}, {
+    name: "level_3",
+    type: "tmx",
+    src: "data/levels/level_3.tmx"
+}, {
     name: "keen",
     type: "image",
     src: "data/sprites/keen.png"
