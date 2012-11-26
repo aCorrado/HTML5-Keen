@@ -25,7 +25,7 @@
   </data>
  </layer>
  <objectgroup name="Entities" width="71" height="69">
-  <object name="mainPlayer" x="160" y="592" width="16" height="16"/>
+  <object name="mainPlayerOW" x="160" y="592" width="16" height="16"/>
  </objectgroup>
  <layer name="Collision" width="71" height="69">
   <data encoding="base64">

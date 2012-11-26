@@ -45,6 +45,10 @@ var g_resources = [{
     type: 'image',
     src: 'data/sprites/keen.png'
 }, {
+    name: 'keen-overworld',
+    type: 'image',
+    src: 'data/sprites/keen_overworld.png'
+}, {
     // Lollipop
     name: 'lollipop',
     type: 'image',
@@ -259,6 +263,7 @@ var jsApp = {
      
         // add our player entity in the entity pool
         me.entityPool.add('mainPlayer', PlayerEntity);
+        me.entityPool.add('mainPlayerOW', OverworldPlayerEntity);
 
         // Collectable Entities
         me.entityPool.add('lollipop', LollipopEntity);
@@ -284,6 +289,9 @@ var jsApp = {
         // enable the keyboard
         me.input.bindKey(me.input.KEY.LEFT, 'left');
         me.input.bindKey(me.input.KEY.RIGHT, 'right');
+        me.input.bindKey(me.input.KEY.UP, 'up');
+        me.input.bindKey(me.input.KEY.DOWN, 'down');
+
 
         me.input.bindKey(me.input.KEY.X, 'jump', false);
         me.input.bindKey(me.input.KEY.CTRL, 'jump', false);

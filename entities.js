@@ -1,6 +1,114 @@
 /*------------------- 
 A player entity
 -------------------------------- */
+var OverworldPlayerEntity = me.ObjectEntity.extend({
+ 
+    isPlayer: true,
+    godMode: false,
+
+
+    init: function(x, y, settings) {
+        this.orientation = 'right';
+
+        this.inventory = {};
+        this.inventory.ammo = 0;
+        this.inventory.keycards = {};
+
+        this.collidable = true;
+
+        settings.image = 'keen-overworld';
+        settings.spritewidth = 12;
+        settings.spriteheight = 16;
+
+        this.speed = 2;
+
+        // call the constructor
+        this.parent(x, y, settings);
+
+        // set the default horizontal & vertical speed (accel vector)
+        this.setVelocity(2.4, 15);
+ 
+        // me.debug.renderHitBox = true;
+
+        // adjust the bounding box
+        this.updateColRect(2, 10, 1, 23);
+        // x, w, y, h
+
+        // me.game.viewport.setBounds(100, 100);
+
+        // set the display to follow our position on both axis
+        me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+
+        this.addAnimation ('stand_left', [14]);
+        this.addAnimation ('walk_left', [11,12,13,14]);
+
+        this.addAnimation ('stand_right', [1]);
+        this.addAnimation ('walk_right', [1,2,3,4]);
+
+        this.addAnimation ('stand_up', [8]);
+        this.addAnimation ('walk_up', [8,9,10]);
+
+        this.addAnimation ('stand_down', [5]);
+        this.addAnimation ('walk_down', [5,6,7,15]);
+    },
+
+    update: function(){
+
+        this.gravity = 0;
+
+        if ( me.input.isKeyPressed('left') ) {
+
+            this.setCurrentAnimation('walk_left');
+
+            // update the entity velocity
+            this.vel.x = -this.speed;
+            this.orientation = 'left';
+        }
+
+        if ( me.input.isKeyPressed('right') ) {
+
+            this.setCurrentAnimation('walk_right');
+
+            // update the entity velocity
+            this.vel.x = this.speed;
+            this.orientation = 'right';
+        }
+
+        if ( me.input.isKeyPressed('up') ) {
+
+            this.setCurrentAnimation('walk_up');
+            // update the entity velocity
+            this.vel.y = -this.speed;
+            this.orientation = 'up';
+        }
+
+        if ( me.input.isKeyPressed('down') ) {
+
+            this.setCurrentAnimation('walk_down');
+
+            // update the entity velocity
+            this.vel.y = this.speed;
+            this.orientation = 'down';
+        }
+
+        this.setCurrentAnimation( 'walk_' + this.orientation );
+
+        if ( !me.input.isKeyPressed('left') && !me.input.isKeyPressed('right') && !me.input.isKeyPressed('up') && !me.input.isKeyPressed('down') ) {
+            this.setCurrentAnimation( 'stand_' + this.orientation );
+            this.vel.x = 0;
+            this.vel.y = 0;
+        }
+
+        this.parent( this );
+        this.updateMovement();
+        return true;
+    }
+
+});
+
+/*------------------- 
+A player entity
+-------------------------------- */
 var PlayerEntity = me.ObjectEntity.extend({
  
     isPlayer: true,
