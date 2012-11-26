@@ -16,6 +16,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 
         this.inventory = {};
         this.inventory.ammo = 0;
+        this.inventory.keycards = {};
 
         this.collidable = true;
 
@@ -349,9 +350,10 @@ var PlayerEntity = me.ObjectEntity.extend({
 
        if ( me.input.isKeyPressed('c') && me.input.isKeyPressed('t') && me.input.isKeyPressed('fire') ) {
             // The C T Space cheat
-            this.inventory.ammo = 100;
             this.inventory.pogo = true;
-            console.log( 'You now have 100 ammo and the pogo stick!' );
+            this.inventory.keycards = {'a': true, 'b': true, 'c': true, 'd': true};
+            this.inventory.ammo = 100;
+            console.log( 'You are now cheating! You just got a pogo stick, all the key cards, and lots of ray gun charges.' );
         }
 
         if ( ( me.input.isKeyPressed('jump') && me.input.isKeyPressed('pogo') ) || me.input.isKeyPressed('fire') ) {
@@ -606,6 +608,29 @@ var PogoEntity = KeenCollectableEntity.extend({
 
         if ( obj.inventory ) {
             obj.inventory.pogo = true;
+        }
+    }
+});
+
+/*----------------
+ Keycard entity
+------------------------ */
+var KeycardEntity = KeenCollectableEntity.extend({
+    niceName: 'Keycard',
+    sound: 'keycard',
+    spritewidth: 14,
+
+    init: function( x, y, settings ){
+        this.cardtype = settings.type;
+        this.spriteimage = 'keycard-' + this.cardtype;
+        this.parent( x, y, settings );
+    },
+
+    onCollision: function(res, obj) {
+        this.parent(res, obj);
+        if ( obj.inventory ) {
+            obj.inventory.pogo = true;
+            obj.inventory.keycards[ this.cardtype ] = true;
         }
     }
 });

@@ -75,6 +75,26 @@ var g_resources = [{
     type: 'image',
     src: 'data/sprites/items/raygun.png'
 }, {
+    // Keycard A
+    name: 'keycard-a',
+    type: 'image',
+    src: 'data/sprites/items/keycard-a.png'
+}, {
+    // Keycard B
+    name: 'keycard-b',
+    type: 'image',
+    src: 'data/sprites/items/keycard-b.png'
+}, {
+    // Keycard C
+    name: 'keycard-c',
+    type: 'image',
+    src: 'data/sprites/items/keycard-c.png'
+}, {
+    // Keycard D
+    name: 'keycard-d',
+    type: 'image',
+    src: 'data/sprites/items/keycard-d.png'
+}, {
     // Pogo stick
     name: 'pogo-stick',
     type: 'image',
@@ -93,6 +113,12 @@ var g_resources = [{
 // audio resources
 {
     name: 'collect',
+    type: 'audio',
+    src: 'data/audio/',
+    channel: 2
+}, {
+    // Keycard collect
+    name: 'keycard',
     type: 'audio',
     src: 'data/audio/',
     channel: 2
@@ -240,6 +266,8 @@ var jsApp = {
         me.entityPool.add('pizza', PizzaEntity);
         me.entityPool.add('book', BookEntity);
         me.entityPool.add('teddy-bear', TeddyBearEntity);
+
+        me.entityPool.add('keycard', KeycardEntity);
         
         me.entityPool.add('raygun', RaygunEntity);
         me.entityPool.add('pogo', PogoEntity);
