@@ -9,6 +9,14 @@
 
 // Resources
 var g_resources = [{
+    name: 'mars',
+    type: 'image',
+    src: 'data/tilesets/levels/mars.png'
+}, {
+    name: 'mars',
+    type: 'tmx',
+    src: 'data/levels/mars.tmx'
+}, {
     name: 'main',
     type: 'image',
     src: 'data/tilesets/main.png'
