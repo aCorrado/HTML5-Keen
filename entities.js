@@ -6,7 +6,6 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
     isPlayer: true,
     godMode: false,
 
-
     init: function(x, y, settings) {
         this.orientation = 'down';
 
@@ -39,17 +38,17 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
         // set the display to follow our position on both axis
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 
-        this.addAnimation ('stand_left', [14]);
-        this.addAnimation ('walk_left', [11,12,13,14]);
+        this.addAnimation ('stand_left', [15]);
+        this.addAnimation ('walk_left', [12,13,14,15]);
 
-        this.addAnimation ('stand_right', [1]);
-        this.addAnimation ('walk_right', [1,2,3,4]);
+        this.addAnimation ('stand_right', [6]);
+        this.addAnimation ('walk_right', [4,5,6,7]);
 
         this.addAnimation ('stand_up', [8]);
-        this.addAnimation ('walk_up', [8,9,10]);
+        this.addAnimation ('walk_up', [8,9,10,11]);
 
-        this.addAnimation ('stand_down', [5]);
-        this.addAnimation ('walk_down', [5,6,7,15]);
+        this.addAnimation ('stand_down', [0]);
+        this.addAnimation ('walk_down', [0,1,2,3]);
     },
 
     update: function(){
@@ -100,8 +99,8 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
         }
 
         var res = me.game.collide(this);
-        if ( res && res.obj.levelname && me.input.isKeyPressed('jump') ) {
-            
+        if ( res && res.obj.levelname && ( me.input.isKeyPressed('jump')|| me.input.isKeyPressed('fire')|| me.input.isKeyPressed('pogo') ) ) {
+
             KeenLevelLoader( res.obj.levelname );
         }
 

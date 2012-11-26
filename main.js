@@ -182,6 +182,11 @@ var g_resources = [{
     src: 'data/sprites/exit-overlay.png',
     channel: 1
 }, {
+    name: 'start',
+    type: 'audio',
+    src: 'data/audio/',
+    channel: 1
+}, {
     name: 'die',
     type: 'audio',
     src: 'data/audio/',
