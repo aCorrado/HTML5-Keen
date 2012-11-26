@@ -643,6 +643,18 @@ var PatPatEntity = EnemyEntity.extend({
     spritewidth: 14,
 });
 
+var VorticonEntity = EnemyEntity.extend({
+    spriteimage: 'green-spikes',
+    spritewidth: 14,
+    spriteheight: 14
+});
+
+var GargEntity = EnemyEntity.extend({
+    spriteimage: 'green-spikes',
+    spritewidth: 14,
+    spriteheight: 14
+});
+
 var GreenSpikesEntity = EnemyEntity.extend({
     spriteimage: 'green-spikes',
     spritewidth: 32,

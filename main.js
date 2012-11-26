@@ -240,6 +240,8 @@ var jsApp = {
         me.entityPool.add('pat-pat', PatPatEntity);
         me.entityPool.add('green-spikes', GreenSpikesEntity);
         me.entityPool.add('yorp', YorpEntity);
+        me.entityPool.add('vorticon', VorticonEntity);
+        me.entityPool.add('garg', GargEntity);
 
         me.entityPool.add('exit', ExitEntity);
      
