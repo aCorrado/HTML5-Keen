@@ -9,174 +9,174 @@
 
 // Resources
 var g_resources = [{
-    name: "main",
-    type: "image",
-    src: "data/tilesets/main.png"
+    name: 'main',
+    type: 'image',
+    src: 'data/tilesets/main.png'
 }, {
-    name: "level_1",
-    type: "tmx",
-    src: "data/levels/level_1.tmx"
+    name: 'level_1',
+    type: 'tmx',
+    src: 'data/levels/level_1.tmx'
 }, {
-    name: "2",
-    type: "image",
-    src: "data/tilesets/levels/2.png"
+    name: '2',
+    type: 'image',
+    src: 'data/tilesets/levels/2.png'
 }, {
-    name: "level_2",
-    type: "tmx",
-    src: "data/levels/level_2.tmx"
+    name: 'level_2',
+    type: 'tmx',
+    src: 'data/levels/level_2.tmx'
 }, {
-    name: "3",
-    type: "image",
-    src: "data/tilesets/levels/3.png"
+    name: '3',
+    type: 'image',
+    src: 'data/tilesets/levels/3.png'
 }, {
-    name: "level_3",
-    type: "tmx",
-    src: "data/levels/level_3.tmx"
+    name: 'level_3',
+    type: 'tmx',
+    src: 'data/levels/level_3.tmx'
 }, {
-    name: "keen",
-    type: "image",
-    src: "data/sprites/keen.png"
+    name: 'keen',
+    type: 'image',
+    src: 'data/sprites/keen.png'
 }, {
     // Lollipop
-    name: "lollipop",
-    type: "image",
-    src: "data/sprites/items/lollipop.png"
+    name: 'lollipop',
+    type: 'image',
+    src: 'data/sprites/items/lollipop.png'
 }, {
     // Soda
-    name: "soda",
-    type: "image",
-    src: "data/sprites/items/soda.png"
+    name: 'soda',
+    type: 'image',
+    src: 'data/sprites/items/soda.png'
 }, {
     // Pizza
-    name: "pizza",
-    type: "image",
-    src: "data/sprites/items/pizza.png"
+    name: 'pizza',
+    type: 'image',
+    src: 'data/sprites/items/pizza.png'
 }, {
     // Book
-    name: "book",
-    type: "image",
-    src: "data/sprites/items/book.png"
+    name: 'book',
+    type: 'image',
+    src: 'data/sprites/items/book.png'
 }, {
     // Teddy Bear
-    name: "teddy-bear",
-    type: "image",
-    src: "data/sprites/items/teddy-bear.png"
+    name: 'teddy-bear',
+    type: 'image',
+    src: 'data/sprites/items/teddy-bear.png'
 }, {
     // Raygun
-    name: "raygun",
-    type: "image",
-    src: "data/sprites/items/raygun.png"
+    name: 'raygun',
+    type: 'image',
+    src: 'data/sprites/items/raygun.png'
 }, {
     // Pogo stick
-    name: "pogo-stick",
-    type: "image",
-    src: "data/sprites/items/pogo-stick.png"
+    name: 'pogo-stick',
+    type: 'image',
+    src: 'data/sprites/items/pogo-stick.png'
 }, {
     // Raygun bullet
-    name: "bullet",
-    type: "image",
-    src: "data/sprites/bullet.png"
+    name: 'bullet',
+    type: 'image',
+    src: 'data/sprites/bullet.png'
 }, {
 	// game font
-    name: "32x32_font",
-    type: "image",
-    src: "data/sprites/32x32_font.png"
+    name: '32x32_font',
+    type: 'image',
+    src: 'data/sprites/32x32_font.png'
 },
 // audio resources
 {
-    name: "collect",
-    type: "audio",
-    src: "data/audio/",
+    name: 'collect',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 2
 }, {
-    name: "jump",
-    type: "audio",
-    src: "data/audio/",
+    name: 'jump',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "fall",
-    type: "audio",
-    src: "data/audio/",
+    name: 'fall',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "land",
-    type: "audio",
-    src: "data/audio/",
+    name: 'land',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 2
 }, {
-    name: "head-bump",
-    type: "audio",
-    src: "data/audio/",
+    name: 'head-bump',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "raygun-collect",
-    type: "audio",
-    src: "data/audio/",
+    name: 'raygun-collect',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "shoot",
-    type: "audio",
-    src: "data/audio/",
+    name: 'shoot',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "shoot-wall",
-    type: "audio",
-    src: "data/audio/",
+    name: 'shoot-wall',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "shoot-empty",
-    type: "audio",
-    src: "data/audio/",
+    name: 'shoot-empty',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "joystick",
-    type: "audio",
-    src: "data/audio/",
+    name: 'joystick',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "exit",
-    type: "audio",
-    src: "data/audio/",
+    name: 'exit',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "exit-overlay",
-    type: "image",
-    src: "data/sprites/exit-overlay.png",
+    name: 'exit-overlay',
+    type: 'image',
+    src: 'data/sprites/exit-overlay.png',
     channel: 1
 }, {
-    name: "die",
-    type: "audio",
-    src: "data/audio/",
+    name: 'die',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "score-board",
-    type: "audio",
-    src: "data/audio/",
+    name: 'score-board',
+    type: 'audio',
+    src: 'data/audio/',
     channel: 1
 }, {
-    name: "title_screen",
-    type: "image",
-    src: "data/GUI/title_screen.png"
+    name: 'title_screen',
+    type: 'image',
+    src: 'data/GUI/title_screen.png'
 }, {
-    name: "pat-pat",
-    type: "image",
-    src: "data/sprites/enemies/pat-pat.png"
+    name: 'pat-pat',
+    type: 'image',
+    src: 'data/sprites/enemies/pat-pat.png'
 }, {
-    name: "green-spikes",
-    type: "image",
-    src: "data/sprites/environment/green-spikes.png"
+    name: 'green-spikes',
+    type: 'image',
+    src: 'data/sprites/environment/green-spikes.png'
 }, {
-    name: "yorp",
-    type: "image",
-    src: "data/sprites/enemies/yorp.png"
+    name: 'yorp',
+    type: 'image',
+    src: 'data/sprites/enemies/yorp.png'
 }, {
-    name: "yorp-cry",
-    type: "audio",
-    src: "data/audio/"
+    name: 'yorp-cry',
+    type: 'audio',
+    src: 'data/audio/'
 }, {
-    name: "yorp-die",
-    type: "audio",
-    src: "data/audio/"
+    name: 'yorp-die',
+    type: 'audio',
+    src: 'data/audio/'
 }];
 
 
@@ -189,12 +189,12 @@ var jsApp = {
 
 		// init the video
 		if (!me.video.init('jsapp', 320, 200, true, 'auto')) {
-			alert("Sorry but your browser does not support html 5 canvas.");
+			alert('Sorry but your browser does not support html 5 canvas.');
             return;
 		}
 
-		// initialize the "audio"
-		me.audio.init("mp3,ogg");
+		// initialize the 'audio'
+		me.audio.init('mp3,ogg');
 		
 		// set all resources to be loaded
 		me.loader.onload = this.loaded.bind(this);
@@ -214,52 +214,65 @@ var jsApp = {
     ------------------------ */
     loaded: function() {
 
-        // set the "Play/Ingame" Screen Object
+        // set the 'Play/Ingame' Screen Object
         me.state.set(me.state.MENU, new TitleScreen());
      
-        // set the "Play/Ingame" Screen Object
+        // set the 'Play/Ingame' Screen Object
         me.state.set(me.state.PLAY, new PlayScreen());
      
         // set a global fading transition for the screen
         me.state.transition('fade', '#FFFFFF', 250);
      
         // add our player entity in the entity pool
-        me.entityPool.add("mainPlayer", PlayerEntity);
+        me.entityPool.add('mainPlayer', PlayerEntity);
 
         // Collectable Entities
-        me.entityPool.add("lollipop", LollipopEntity);
-        me.entityPool.add("soda", SodaEntity);
-        me.entityPool.add("pizza", PizzaEntity);
-        me.entityPool.add("book", BookEntity);
-        me.entityPool.add("teddy-bear", TeddyBearEntity);
+        me.entityPool.add('lollipop', LollipopEntity);
+        me.entityPool.add('soda', SodaEntity);
+        me.entityPool.add('pizza', PizzaEntity);
+        me.entityPool.add('book', BookEntity);
+        me.entityPool.add('teddy-bear', TeddyBearEntity);
         
-        me.entityPool.add("raygun", RaygunEntity);
-        me.entityPool.add("pogo", PogoEntity);
+        me.entityPool.add('raygun', RaygunEntity);
+        me.entityPool.add('pogo', PogoEntity);
 
         // Enemy Entities
-        me.entityPool.add("pat-pat", PatPatEntity);
-        me.entityPool.add("green-spikes", GreenSpikesEntity);
-        me.entityPool.add("yorp", YorpEntity);
+        me.entityPool.add('pat-pat', PatPatEntity);
+        me.entityPool.add('green-spikes', GreenSpikesEntity);
+        me.entityPool.add('yorp', YorpEntity);
 
-        me.entityPool.add("exit", ExitEntity);
+        me.entityPool.add('exit', ExitEntity);
      
         // enable the keyboard
-        me.input.bindKey(me.input.KEY.LEFT, "left");
-        me.input.bindKey(me.input.KEY.RIGHT, "right");
+        me.input.bindKey(me.input.KEY.LEFT, 'left');
+        me.input.bindKey(me.input.KEY.RIGHT, 'right');
 
-        me.input.bindKey(me.input.KEY.X, "jump", false);
-        me.input.bindKey(me.input.KEY.CTRL, "jump", false);
+        me.input.bindKey(me.input.KEY.X, 'jump', false);
+        me.input.bindKey(me.input.KEY.CTRL, 'jump', false);
 
-        me.input.bindKey(me.input.KEY.Z, "pogo", true);
-        me.input.bindKey(me.input.KEY.ALT, "pogo", true);
-        me.input.bindKey(me.input.KEY.SPACE, "fire", true);
+        me.input.bindKey(me.input.KEY.Z, 'pogo', true);
+        me.input.bindKey(me.input.KEY.ALT, 'pogo', true);
+        me.input.bindKey(me.input.KEY.SPACE, 'fire', true);
 
-        me.input.bindKey(me.input.KEY.C, "c", false);
-        me.input.bindKey(me.input.KEY.T, "t", false);
-        // me.input.bindKey(me.input.KEY.SPACE, "space");
+        me.input.bindKey(me.input.KEY.C, 'c', false);
+        me.input.bindKey(me.input.KEY.T, 't', false);
+        // me.input.bindKey(me.input.KEY.SPACE, 'space');
+
+        me.input.bindKey(me.input.KEY.G, 'g', false);
+        me.input.bindKey(me.input.KEY.O, 'o', false);
+        me.input.bindKey(me.input.KEY.D, 'd', false);
      
         // display the menu title
         me.state.change(me.state.MENU);
+
+        me.event.subscribe(me.event.KEYDOWN, function (action) {
+            if (action == 'g' || action == 'o' || action == 'd' ) {
+                if( me.input.isKeyPressed('g') && me.input.isKeyPressed('o') && me.input.isKeyPressed('d') ) {
+                    jsApp.mainPlayer.godMode = !jsApp.mainPlayer.godMode;
+                    console.log( 'God mode is now ' + jsApp.mainPlayer.godMode );
+                }
+            }
+        });
     }
 
 }; // end jsApp
@@ -284,7 +297,7 @@ var PlayScreen = me.ScreenObject.extend({
         KeenLevelLoader('level_1');
  		
  		/*context.drawImage(this.title, 0, 0);
-        this.font.draw(context, "LEVEL ONE", 20, 240);*/
+        this.font.draw(context, 'LEVEL ONE', 20, 240);*/
 
         // add a default HUD to the game mngr
         // me.game.addHUD(0, 430, 640, 60);

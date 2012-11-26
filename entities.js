@@ -4,12 +4,14 @@ A player entity
 var PlayerEntity = me.ObjectEntity.extend({
  
     isPlayer: true,
+    godMode: false,
 
     /* -----
     constructor
     ------ */
 
     init: function(x, y, settings) {
+
         this.orientation = 'right';
 
         this.inventory = {};
@@ -60,7 +62,6 @@ var PlayerEntity = me.ObjectEntity.extend({
         this.addAnimation ('pogo_up_left', [11]);
 
         this.addAnimation ('die', [26,27]);
-
     },
  
     /* -----
@@ -101,12 +102,14 @@ var PlayerEntity = me.ObjectEntity.extend({
     },
 
     update: function() {
+        jsApp.mainPlayer = me.game.getEntityByName("mainPlayer")[0];
+
         // check for collision
         var res = me.game.collide(this);
         // check for collision
         var collision = this.collisionMap.checkCollision(this.collisionBox, this.vel);
 
-        if (res && res.obj.deadly && this.alive) {
+        if (res && res.obj.deadly && this.alive && !this.godMode ) {
             this.die();
         }
 
@@ -170,9 +173,6 @@ var PlayerEntity = me.ObjectEntity.extend({
         if ( me.input.isKeyPressed('pogo') && this.inventory.pogo ) {
             this.previousvel = {};
 
-
-            
-
             if ( !this.vel.y && !this.pogoing) {
                 this.gravity = 0.15;
                 this.vel.y = -4 * me.timer.tick;
@@ -182,6 +182,13 @@ var PlayerEntity = me.ObjectEntity.extend({
         }
 
         if ( this.pogoing ) {
+
+       if ( me.input.isKeyPressed('jump') && this.godMode ) {
+            this.vel.y--;
+            // this.updateMovement();
+            // return true;
+        }
+
             if (me.input.isKeyPressed('left')) {
                 
                 
@@ -344,6 +351,7 @@ var PlayerEntity = me.ObjectEntity.extend({
             // The C T Space cheat
             this.inventory.ammo = 100;
             this.inventory.pogo = true;
+            console.log( 'You now have 100 ammo and the pogo stick!' );
         }
 
         if ( ( me.input.isKeyPressed('jump') && me.input.isKeyPressed('pogo') ) || me.input.isKeyPressed('fire') ) {
@@ -398,7 +406,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 
         } else  {
 
-        }        
+        }
 
         // update animation if necessary
         if (this.vel.x != 0 || this.vel.y != 0) {
@@ -687,7 +695,6 @@ var YorpEntity = EnemyEntity.extend({
 
     update: function() {
         this.parent();
-        // jsApp.mainPlayer = me.game.getEntityByName("mainPlayer")[0];
 
         if ( this.alive ) {
 
