@@ -21,25 +21,25 @@ var g_resources = [{
     type: 'image',
     src: 'data/tilesets/main.png'
 }, {
-    name: 'level_1',
+    name: '1',
     type: 'tmx',
-    src: 'data/levels/level_1.tmx'
+    src: 'data/levels/1.tmx'
 }, {
     name: '2',
     type: 'image',
     src: 'data/tilesets/levels/2.png'
 }, {
-    name: 'level_2',
+    name: '2',
     type: 'tmx',
-    src: 'data/levels/level_2.tmx'
+    src: 'data/levels/2.tmx'
 }, {
     name: '3',
     type: 'image',
     src: 'data/tilesets/levels/3.png'
 }, {
-    name: 'level_3',
+    name: '3',
     type: 'tmx',
-    src: 'data/levels/level_3.tmx'
+    src: 'data/levels/3.tmx'
 }, {
     name: 'keen',
     type: 'image',
@@ -264,6 +264,7 @@ var jsApp = {
         // add our player entity in the entity pool
         me.entityPool.add('mainPlayer', PlayerEntity);
         me.entityPool.add('mainPlayerOW', OverworldPlayerEntity);
+        me.entityPool.add('level', OverworldLevelEntity);
 
         // Collectable Entities
         me.entityPool.add('lollipop', LollipopEntity);
@@ -340,7 +341,7 @@ var PlayScreen = me.ScreenObject.extend({
 
         // load a level
         // me.levelDirector.loadLevel('level_1');
-        KeenLevelLoader('level_1');
+        KeenLevelLoader('mars');
  		
  		/*context.drawImage(this.title, 0, 0);
         this.font.draw(context, 'LEVEL ONE', 20, 240);*/

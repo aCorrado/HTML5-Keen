@@ -25,7 +25,87 @@
   </data>
  </layer>
  <objectgroup name="Entities" width="71" height="69">
-  <object name="mainPlayerOW" x="160" y="592" width="16" height="16"/>
+  <object name="mainPlayerOW" x="160" y="560" width="16" height="16"/>
+  <object name="level" x="304" y="592" width="32" height="32">
+   <properties>
+    <property name="levelname" value="1"/>
+   </properties>
+  </object>
+  <object name="level" x="352" y="448" width="16" height="16">
+   <properties>
+    <property name="levelname" value="2"/>
+   </properties>
+  </object>
+  <object name="level" x="208" y="256" width="16" height="16">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="144" y="336" width="32" height="32">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="352" y="368" width="32" height="32">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="400" y="128" width="32" height="32">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="256" y="176" width="16" height="16">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="576" y="208" width="16" height="16">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="608" y="48" width="32" height="32">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="688" y="80" width="16" height="16">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="832" y="256" width="16" height="16">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="704" y="384" width="32" height="32">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="576" y="336" width="16" height="16">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="608" y="960" width="16" height="16">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="464" y="944" width="32" height="32">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
+  <object name="level" x="960" y="448" width="32" height="32">
+   <properties>
+    <property name="levelname" value=""/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="Collision" width="71" height="69">
   <data encoding="base64">

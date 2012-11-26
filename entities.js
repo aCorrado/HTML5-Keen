@@ -8,13 +8,13 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
 
 
     init: function(x, y, settings) {
-        this.orientation = 'right';
+        this.orientation = 'down';
 
         this.inventory = {};
         this.inventory.ammo = 0;
         this.inventory.keycards = {};
 
-        this.collidable = true;
+        settings.collidable = true;
 
         settings.image = 'keen-overworld';
         settings.spritewidth = 12;
@@ -31,7 +31,7 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
         // me.debug.renderHitBox = true;
 
         // adjust the bounding box
-        this.updateColRect(2, 10, 1, 23);
+        this.updateColRect(0, 8, 0, 16);
         // x, w, y, h
 
         // me.game.viewport.setBounds(100, 100);
@@ -63,15 +63,15 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
             // update the entity velocity
             this.vel.x = -this.speed;
             this.orientation = 'left';
-        }
-
-        if ( me.input.isKeyPressed('right') ) {
+        } else if ( me.input.isKeyPressed('right') ) {
 
             this.setCurrentAnimation('walk_right');
 
             // update the entity velocity
             this.vel.x = this.speed;
             this.orientation = 'right';
+        } else {
+            this.vel.x = 0;
         }
 
         if ( me.input.isKeyPressed('up') ) {
@@ -80,15 +80,15 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
             // update the entity velocity
             this.vel.y = -this.speed;
             this.orientation = 'up';
-        }
-
-        if ( me.input.isKeyPressed('down') ) {
+        } else if ( me.input.isKeyPressed('down') ) {
 
             this.setCurrentAnimation('walk_down');
 
             // update the entity velocity
             this.vel.y = this.speed;
             this.orientation = 'down';
+        } else {
+            this.vel.y = 0;
         }
 
         this.setCurrentAnimation( 'walk_' + this.orientation );
@@ -99,6 +99,37 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
             this.vel.y = 0;
         }
 
+        var res = me.game.collide(this);
+        if ( res && res.obj.levelname && me.input.isKeyPressed('jump') ) {
+            
+            KeenLevelLoader( res.obj.levelname );
+        }
+
+        this.parent( this );
+        this.updateMovement();
+        return true;
+    }
+
+});
+
+var OverworldLevelEntity = me.ObjectEntity.extend({
+
+
+
+    init: function(x, y, settings) {
+        settings.collidable = true;
+        this.levelname = settings.levelname;
+        settings.image = 'keen-overworld';
+        // this.visible = false;
+        settings.spritewidth = settings.width;
+        settings.spriteheight = settings.height;
+
+        this.parent(x, y, settings);
+    },
+
+    update: function(){
+        this.alpha = 0;
+        this.gravity = 0;
         this.parent( this );
         this.updateMovement();
         return true;
@@ -232,7 +263,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 
                 if ( this.framesSinceExitCollision > 100 ) {
                     this.exiting = false;
-                    KeenLevelLoader('level_1');
+                    KeenLevelLoader('mars');
                     return true;
                     // me.game.viewport.fadeOut('#FF0000', 250, function(){ });
                 }
@@ -260,7 +291,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 
                 if (this.pos.y < 0) {
                     // Reload level when player is off screen
-                    KeenLevelLoader('level_1');
+                    KeenLevelLoader('mars');
                 }
 
 
