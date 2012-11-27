@@ -49,26 +49,46 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
 
         this.addAnimation ('stand_down', [0]);
         this.addAnimation ('walk_down', [0,1,2,3]);
+
+        this.nonCollidedPos = [];
     },
 
     update: function(){
-
         this.gravity = 0;
+
+        var res = me.game.collide( this );
+        /*
+        if ( res && res.obj.solid ) {
+            // this.vel.x = 0;
+            // this.vel.y = 0;
+            this.pos.x = this.nonCollidedPos[4].x;
+            this.pos.y = this.nonCollidedPos[4].y;
+
+            console.log( this.nonCollidedPos[4].x );
+
+            this.parent( this );
+            this.updateMovement();
+            return false;
+        } else {
+            this.nonCollidedPos.push( this.pos );
+
+            // this.nonCollidedPos = {x: 230, y: 580};
+        } */
 
         if ( me.input.isKeyPressed('left') ) {
 
             this.setCurrentAnimation('walk_left');
+            this.orientation = 'left';
 
             // update the entity velocity
             this.vel.x = -this.speed;
-            this.orientation = 'left';
         } else if ( me.input.isKeyPressed('right') ) {
 
             this.setCurrentAnimation('walk_right');
+            this.orientation = 'right';
 
             // update the entity velocity
             this.vel.x = this.speed;
-            this.orientation = 'right';
         } else {
             this.vel.x = 0;
         }
@@ -76,16 +96,17 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
         if ( me.input.isKeyPressed('up') ) {
 
             this.setCurrentAnimation('walk_up');
+            this.orientation = 'up';
+
             // update the entity velocity
             this.vel.y = -this.speed;
-            this.orientation = 'up';
         } else if ( me.input.isKeyPressed('down') ) {
 
             this.setCurrentAnimation('walk_down');
+            this.orientation = 'down';
 
             // update the entity velocity
             this.vel.y = this.speed;
-            this.orientation = 'down';
         } else {
             this.vel.y = 0;
         }
@@ -98,28 +119,34 @@ var OverworldPlayerEntity = me.ObjectEntity.extend({
             this.vel.y = 0;
         }
 
-        var res = me.game.collide(this);
         if ( res && res.obj.levelname && ( me.input.isKeyPressed('jump')|| me.input.isKeyPressed('fire')|| me.input.isKeyPressed('pogo') ) ) {
 
             KeenLevelLoader( res.obj.levelname );
         }
 
-        this.parent( this );
+        // check & update player movement
         this.updateMovement();
-        return true;
+ 
+        // update animation if necessary
+        if (this.vel.x!=0 || this.vel.y!=0) {
+            // update objet animation
+            this.parent(this);
+            return true;
+        }
+         
+        // else inform the engine we did not perform
+        // any update (e.g. position, animation)
+        return false;
     }
 
 });
 
 var OverworldLevelEntity = me.ObjectEntity.extend({
 
-
-
     init: function(x, y, settings) {
         settings.collidable = true;
         this.levelname = settings.levelname;
         settings.image = 'keen-overworld';
-        // this.visible = false;
         settings.spritewidth = settings.width;
         settings.spriteheight = settings.height;
 
@@ -129,6 +156,32 @@ var OverworldLevelEntity = me.ObjectEntity.extend({
     update: function(){
         this.alpha = 0;
         this.gravity = 0;
+
+        this.parent( this );
+        this.updateMovement();
+        return true;
+    }
+
+});
+
+var OverworldLevelBlockEntity = me.ObjectEntity.extend({
+
+    solid: true,
+
+    init: function(x, y, settings) {
+        settings.collidable = true;
+        this.levelname = settings.levelname;
+        settings.image = 'keen-overworld';
+        settings.spritewidth = settings.width;
+        settings.spriteheight = settings.height;
+
+        this.parent(x, y, settings);
+    },
+
+    update: function(){
+        this.alpha = 0;
+        this.gravity = 0;
+
         this.parent( this );
         this.updateMovement();
         return true;
