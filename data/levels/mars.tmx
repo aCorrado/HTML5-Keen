@@ -43,7 +43,7 @@
   </object>
   <object name="level" x="144" y="336" width="32" height="32">
    <properties>
-    <property name="levelname" value=""/>
+    <property name="levelname" value="3"/>
    </properties>
   </object>
   <object name="level" x="352" y="368" width="32" height="32">
@@ -106,6 +106,7 @@
     <property name="levelname" value=""/>
    </properties>
   </object>
+  <object name="level-block" x="320" y="592" width="16" height="32"/>
  </objectgroup>
  <layer name="Collision" width="71" height="69">
   <data encoding="base64">

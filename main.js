@@ -270,6 +270,7 @@ var jsApp = {
         me.entityPool.add('mainPlayer', PlayerEntity);
         me.entityPool.add('mainPlayerOW', OverworldPlayerEntity);
         me.entityPool.add('level', OverworldLevelEntity);
+        me.entityPool.add('level-block', OverworldLevelBlockEntity);
 
         // Collectable Entities
         me.entityPool.add('lollipop', LollipopEntity);
